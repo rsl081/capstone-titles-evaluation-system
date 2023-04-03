@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230403052325_InitialCreate")]
+    [Migration("20230403131635_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,6 +136,12 @@ namespace Infrastructure.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("SchoolId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("SchoolId1")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
@@ -154,6 +160,8 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("SchoolId1");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -241,23 +249,37 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("SchoolYear")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Schools");
+                });
+
+            modelBuilder.Entity("Core.Entities.Section", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Group")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("SchoolYear")
+                    b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Section")
+                    b.Property<string>("SchoolId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("SchoolId1")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("SchoolId1");
 
-                    b.ToTable("Schools");
+                    b.ToTable("Section");
                 });
 
             modelBuilder.Entity("Core.Entities.Team", b =>
@@ -366,6 +388,15 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
+                {
+                    b.HasOne("Core.Entities.School", "School")
+                        .WithMany("FacultyUser")
+                        .HasForeignKey("SchoolId1");
+
+                    b.Navigation("School");
+                });
+
             modelBuilder.Entity("Core.Entities.Identity.AppUserRole", b =>
                 {
                     b.HasOne("Core.Entities.Identity.AppRole", "Role")
@@ -407,11 +438,13 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("FileRepo");
                 });
 
-            modelBuilder.Entity("Core.Entities.School", b =>
+            modelBuilder.Entity("Core.Entities.Section", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
-                        .WithMany("Schools")
-                        .HasForeignKey("AppUserId");
+                    b.HasOne("Core.Entities.School", "School")
+                        .WithMany("Sections")
+                        .HasForeignKey("SchoolId1");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("Core.Entities.Team", b =>
@@ -466,13 +499,18 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.Navigation("JustiFiles");
 
-                    b.Navigation("Schools");
-
                     b.Navigation("Teams");
 
                     b.Navigation("UserPhoto");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Core.Entities.School", b =>
+                {
+                    b.Navigation("FacultyUser");
+
+                    b.Navigation("Sections");
                 });
 #pragma warning restore 612, 618
         }

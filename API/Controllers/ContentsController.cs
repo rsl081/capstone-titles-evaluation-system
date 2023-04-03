@@ -12,15 +12,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class ContentsController : BaseApiController
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
-
+        
         public ContentsController(DataContext dataContext, IMapper mapper)
+            : base(dataContext, mapper)
         {
-            this._mapper = mapper;
-            this._dataContext = dataContext;
+          
         }
         
         [HttpPost]
@@ -37,7 +36,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult> GetContents()
         {
             return Ok(await _dataContext.Contents.ToListAsync());
