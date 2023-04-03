@@ -14,6 +14,7 @@ namespace API.Helpers
         {
             CreateMap<ContentCreateDto, Content>();
             CreateMap<SYCreateDto, School>();
+            CreateMap<SectionCreateDto, Section>();
         }
     }
 }

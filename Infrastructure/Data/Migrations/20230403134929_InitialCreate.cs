@@ -92,8 +92,7 @@ namespace Infrastructure.Data.Migrations
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Expertise = table.Column<string>(type: "TEXT", nullable: true),
                     IsApproved = table.Column<bool>(type: "INTEGER", nullable: false),
-                    SchoolId1 = table.Column<Guid>(type: "TEXT", nullable: true),
-                    SchoolId = table.Column<string>(type: "TEXT", nullable: true),
+                    SchoolId = table.Column<Guid>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -113,30 +112,31 @@ namespace Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Schools_SchoolId1",
-                        column: x => x.SchoolId1,
+                        name: "FK_AspNetUsers_Schools_SchoolId",
+                        column: x => x.SchoolId,
                         principalTable: "Schools",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Section",
+                name: "Sections",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Group = table.Column<string>(type: "TEXT", nullable: true),
-                    SchoolId1 = table.Column<Guid>(type: "TEXT", nullable: true),
-                    SchoolId = table.Column<string>(type: "TEXT", nullable: true)
+                    SchoolId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Section", x => x.Id);
+                    table.PrimaryKey("PK_Sections", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Section_Schools_SchoolId1",
-                        column: x => x.SchoolId1,
+                        name: "FK_Sections_Schools_SchoolId",
+                        column: x => x.SchoolId,
                         principalTable: "Schools",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -322,9 +322,9 @@ namespace Infrastructure.Data.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_SchoolId1",
+                name: "IX_AspNetUsers_SchoolId",
                 table: "AspNetUsers",
-                column: "SchoolId1");
+                column: "SchoolId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -343,9 +343,9 @@ namespace Infrastructure.Data.Migrations
                 column: "FileRepoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Section_SchoolId1",
-                table: "Section",
-                column: "SchoolId1");
+                name: "IX_Sections_SchoolId",
+                table: "Sections",
+                column: "SchoolId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Team_AppUserId",
@@ -383,7 +383,7 @@ namespace Infrastructure.Data.Migrations
                 name: "JustiFiles");
 
             migrationBuilder.DropTable(
-                name: "Section");
+                name: "Sections");
 
             migrationBuilder.DropTable(
                 name: "Team");

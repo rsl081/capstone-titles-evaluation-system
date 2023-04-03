@@ -14,6 +14,7 @@ namespace Infrastructure.Data
         public DbSet<JustiFile> JustiFiles { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<School> Schools { get; set; }
+        public DbSet<Section> Sections { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base
         (options)
         {}

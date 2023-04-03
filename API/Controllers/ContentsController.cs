@@ -42,7 +42,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteContents(Guid id)
+        public async Task<ActionResult> DeleteContent(Guid id)
         {
             var content = await _dataContext.Contents.FindAsync(id);
 

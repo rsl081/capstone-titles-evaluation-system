@@ -134,10 +134,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SchoolId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("SchoolId1")
+                    b.Property<Guid>("SchoolId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
@@ -159,7 +156,7 @@ namespace Infrastructure.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.HasIndex("SchoolId1");
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -267,17 +264,14 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("SchoolId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("SchoolId1")
+                    b.Property<Guid>("SchoolId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolId1");
+                    b.HasIndex("SchoolId");
 
-                    b.ToTable("Section");
+                    b.ToTable("Sections");
                 });
 
             modelBuilder.Entity("Core.Entities.Team", b =>
@@ -390,7 +384,9 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.HasOne("Core.Entities.School", "School")
                         .WithMany("FacultyUser")
-                        .HasForeignKey("SchoolId1");
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("School");
                 });
@@ -440,7 +436,9 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.HasOne("Core.Entities.School", "School")
                         .WithMany("Sections")
-                        .HasForeignKey("SchoolId1");
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("School");
                 });

@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Core.Entities
+namespace API.Dtos
 {
-    public class Section : BaseEntity
+    public class SectionCreateDto
     {
         public string Name { get; set; }
         public string Group { get; set; }
-        [JsonIgnore]
-        public School School { get; set; }
         public Guid SchoolId { get; set; }
     }
 }
