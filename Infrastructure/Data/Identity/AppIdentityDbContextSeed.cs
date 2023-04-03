@@ -16,7 +16,48 @@ namespace Infrastructure.Data.Identity
             {
                 var users = new List<AppUser>
                 {
-
+                    //Data
+                    new AppUser
+                    {
+                        DisplayName = "Admin",
+                        Email = "admin@test.com",
+                        UserName = "admin@test.com",
+                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        EmailConfirmed = true,
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Coordinator",
+                        Email = "coordinator@test.com",
+                        UserName = "coordinator@test.com",
+                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        EmailConfirmed = true,
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Panel",
+                        Email = "panel@test.com",
+                        UserName = "panel@test.com",
+                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        EmailConfirmed = true,
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Adviser",
+                        Email = "adviser@test.com",
+                        UserName = "adviser@test.com",
+                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        EmailConfirmed = true,
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Faculty",
+                        Email = "faculty@test.com",
+                        UserName = "faculty@test.com",
+                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        EmailConfirmed = true,
+                        IsApproved = false,
+                    }
                 };
 
 
@@ -25,7 +66,8 @@ namespace Infrastructure.Data.Identity
                     new AppRole {Name = "Admin"},
                     new AppRole {Name = "Coordinator"},
                     new AppRole {Name = "Panel"},
-                    new AppRole {Name = "Adviser"}
+                    new AppRole {Name = "Adviser"},
+                    new AppRole {Name = "Faculty"},
                 };
 
                 foreach (var role in roles)
@@ -40,6 +82,7 @@ namespace Infrastructure.Data.Identity
                     if (user.Email == "coordinator@test.com") await userManager.AddToRoleAsync(user, "Coordinator");
                     if (user.Email == "panel@test.com") await userManager.AddToRoleAsync(user, "Panel");
                     if (user.Email == "adviser@test.com") await userManager.AddToRoleAsync(user, "Adviser");
+                    if (user.Email == "faculty@test.com") await userManager.AddToRoleAsync(user, "Faculty");
                 }
 
             }

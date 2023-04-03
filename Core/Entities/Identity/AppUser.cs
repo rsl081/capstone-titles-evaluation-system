@@ -14,10 +14,9 @@ namespace Core.Entities.Identity
         // Faculty
         public string Expertise { get; set; }
         public List<School> Schools { get; set; } = new List<School>();
+        public bool IsApproved { get; set; }
         // Student
-        public string Group { get; set; }
-        public string Section { get; set; }
-        public string Team { get; set; }
+        public List<Team> Teams { get; set; } = new List<Team>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();
         public ICollection<AppUserRole> UserRoles { get; set; }
         // public List<Area> Areas { get; set; } = new List<Area>();
