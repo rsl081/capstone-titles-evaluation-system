@@ -35,7 +35,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetSY()
         {
-            return Ok(await _dataContext.Schools.ToListAsync());
+            return Ok(await _dataContext.Schools
+                            .Include(s => s.Sections)
+                            .FirstOrDefaultAsync());
         }
 
         [HttpDelete("{id}")]
