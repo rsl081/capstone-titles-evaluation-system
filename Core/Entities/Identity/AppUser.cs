@@ -13,12 +13,12 @@ namespace Core.Entities.Identity
         public UserPhoto UserPhoto { get; set; }
         // Faculty
         public string Expertise { get; set; }
-        public List<School> Schools { get; set; } = new List<School>();
         public bool IsApproved { get; set; }
+        public School School { get; set; }
+        public string SchoolId { get; set; }
         // Student
         public List<Team> Teams { get; set; } = new List<Team>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();
         public ICollection<AppUserRole> UserRoles { get; set; }
-        // public List<Area> Areas { get; set; } = new List<Area>();
     }
 }

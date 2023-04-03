@@ -13,6 +13,7 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<ContentCreateDto, Content>();
+            CreateMap<SYCreateDto, School>();
         }
     }
 }

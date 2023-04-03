@@ -17,7 +17,6 @@ namespace API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
-        private readonly IMapper _mapper;
         // private readonly IPhotoService _photoService;
         // private readonly IUnitOfWork _unitOfWork;
         // private readonly IEmailService _emailService;
@@ -27,9 +26,8 @@ namespace API.Controllers
             SignInManager<AppUser> signInManager,
             ITokenService tokenService,
             IMapper mapper,
-            IConfiguration config) {
+            IConfiguration config) : base (mapper) {
 
-            this._mapper = mapper;
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._tokenService = tokenService;
