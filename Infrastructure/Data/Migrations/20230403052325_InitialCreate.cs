@@ -56,7 +56,7 @@ namespace Infrastructure.Data.Migrations
                 name: "Contents",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     SchoolName = table.Column<string>(type: "TEXT", nullable: true),
                     Vision = table.Column<string>(type: "TEXT", nullable: true),
                     Mission = table.Column<string>(type: "TEXT", nullable: true)
@@ -70,7 +70,7 @@ namespace Infrastructure.Data.Migrations
                 name: "FileRepo",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Url = table.Column<string>(type: "TEXT", nullable: true),
                     PublicId = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -189,7 +189,7 @@ namespace Infrastructure.Data.Migrations
                 name: "Schools",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     SchoolYear = table.Column<string>(type: "TEXT", nullable: true),
                     Section = table.Column<string>(type: "TEXT", nullable: true),
                     Group = table.Column<string>(type: "TEXT", nullable: true),
@@ -209,7 +209,7 @@ namespace Infrastructure.Data.Migrations
                 name: "Team",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -227,7 +227,7 @@ namespace Infrastructure.Data.Migrations
                 name: "UserPhoto",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Url = table.Column<string>(type: "TEXT", nullable: true),
                     PublicId = table.Column<string>(type: "TEXT", nullable: true),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: true)
@@ -246,14 +246,14 @@ namespace Infrastructure.Data.Migrations
                 name: "JustiFiles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     FileName = table.Column<string>(type: "TEXT", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Grade = table.Column<string>(type: "TEXT", nullable: true),
                     Comment = table.Column<string>(type: "TEXT", nullable: true),
                     Status = table.Column<bool>(type: "INTEGER", nullable: false),
-                    FileRepoId = table.Column<string>(type: "TEXT", nullable: true),
+                    FileRepoId = table.Column<Guid>(type: "TEXT", nullable: true),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
