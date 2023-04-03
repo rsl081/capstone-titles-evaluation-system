@@ -22,6 +22,30 @@ namespace Infrastructure.Data
             ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            foreach (var property in modelBuilder.Model.GetEntityTypes()
+                        .SelectMany(t => t.GetProperties())
+                        .Where
+                        ( p
+                        => p.ClrType == typeof(DateTime) 
+                            || p.ClrType == typeof(DateTime?)
+                        )
+                )
+                {
+                    property.SetColumnType("timestamp without time zone");
+                }
+
+            modelBuilder.Entity<AppUser>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
         }
     }
 }

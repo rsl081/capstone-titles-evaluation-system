@@ -12,6 +12,7 @@ namespace Core.Entities
         public DateTime LastModified { get; set; } = DateTime.Now;
         public string Grade { get; set; }
         public string Comment { get; set; }
+        public bool Status { get; set; }
         public FileRepo FileRepo { get; set; }
     }
 }

@@ -65,7 +65,19 @@ module.exports = {
         custom: '0px 0px 50px 0px rgb(82 63 105 / 15%)',
       },
       colors: {
-        primary: colors.green,
+        // primary: colors.green,
+        primary: {
+          50: '#f1dfe0',
+          100: '#e2bdbe',
+          200: '#d39b9c',
+          300: '#c4797b',
+          400: '#b55759',
+          500: '#984344',
+          600: '#763435',
+          700: '#542526',
+          800: '#321616',
+          900: '#100707',
+        },
         night: {
           50: '#fafafa',
           100: '#f5f5f5',
