@@ -6,6 +6,7 @@ using API.Dtos;
 using AutoMapper;
 using Core.Entities;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetContents()
         {
             return Ok(await _dataContext.Contents.ToListAsync());
