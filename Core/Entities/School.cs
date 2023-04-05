@@ -10,6 +10,10 @@ namespace Core.Entities
     {
         public string SchoolYear { get; set; }
         public List<Section> Sections { get; set; } = new List<Section>();
-        public List<AppUser> FacultyUser { get; set; } = new List<AppUser>();
+        // bale pag craete ng school year need na may faculty na agad doon
+
+        // public AppUser AppUser { get; set; }
+        // public Guid AppUserId { get; set; }
+        // public List<AppUser> FacultyUser { get; set; } = new List<AppUser>();
     }
 }

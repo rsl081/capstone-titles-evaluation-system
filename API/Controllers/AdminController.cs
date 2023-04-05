@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dtos;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities.Identity;
 using Core.Interfaces;
@@ -68,6 +70,107 @@ namespace API.Controllers
 
         }
 
+        [HttpGet("User/All")]
+        public async Task<ActionResult<Pagination<FacultyToReturn>>> GetAllUser()
+        {
+
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(r => r.UserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(s => s.Sections)
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            var data = _mapper.Map<IReadOnlyList<AppUser>,
+                IReadOnlyList<FacultyToReturn>>(user);
+
+            return Ok(new Pagination<FacultyToReturn>(totalItems, data));
+
+        }
+
+        [HttpGet("Faculty/All")]
+        public async Task<ActionResult<Pagination<FacultyToReturn>>> GetAllFaculty()
+        {
+
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(r => r.UserRoles)
+                .ThenInclude(r => r.Role)
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Faculty"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            var data = _mapper.Map<IReadOnlyList<AppUser>,
+                IReadOnlyList<FacultyToReturn>>(user);
+
+            return Ok(new Pagination<FacultyToReturn>(totalItems, data));
+
+        }
+
+        [HttpGet("Coordinator/All")]
+        public async Task<ActionResult<Pagination<CoordinatorToReturn>>> GetAllCoordinator()
+        {
+
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(r => r.UserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(s => s.Sections)
+                .ThenInclude(s => s.School)
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Coordinator"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            var data = _mapper.Map<IReadOnlyList<AppUser>,
+                IReadOnlyList<CoordinatorToReturn>>(user);
+
+            return Ok(new Pagination<CoordinatorToReturn>(totalItems, data));
+
+        }
+
+
+        [HttpPut("Faculty/Edit")]
+        public async Task<ActionResult<FacultyUpdateDto>> UpdateFaculty(
+            FacultyUpdateDto facultyUpdateDto)
+        {  
+            var faculty = await _userManager.Users.SingleOrDefaultAsync(
+                x=> x.Email == facultyUpdateDto.Email);
+
+            if(faculty == null) return BadRequest();
+
+            _mapper.Map(facultyUpdateDto, faculty); 
+
+            await _userManager.UpdateAsync(faculty);
+           
+            return Ok("Successfully Updated");
+        }
+
+        [HttpPut("faculty/edit-roles/{username}")]
+        public async Task<ActionResult> EditRoles(string username, 
+            [FromQuery]string roles)
+        {
+            if(string.IsNullOrEmpty(roles)) return BadRequest("You must select atleast one role");
+
+            var selectedRoles = roles.Split(",").ToArray();
+
+            var user = await _userManager.FindByNameAsync(username);
+            if(user == null) return NotFound();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
+            if(!result.Succeeded) return BadRequest("Failed to add to roles");
+
+            result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
+
+            if(!result.Succeeded) return BadRequest("Failed to remove from roles");
+
+            return Ok(await _userManager.GetRolesAsync(user));
+        }
 
 
     }
