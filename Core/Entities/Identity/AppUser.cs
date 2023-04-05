@@ -14,8 +14,8 @@ namespace Core.Entities.Identity
         // Faculty
         public string Expertise { get; set; }
         public bool IsApproved { get; set; }
-        public School School { get; set; }
-        public Guid SchoolId { get; set; }
+        public List<School> Schools { get; set; } = new List<School>();
+        public List<Section> Sections { get; set; } = new List<Section>();
         // Student
         public List<Team> Teams { get; set; } = new List<Team>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();

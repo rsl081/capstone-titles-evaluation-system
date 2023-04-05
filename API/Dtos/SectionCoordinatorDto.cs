@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace API.Dtos
 {
-    public class SectionCreateDto
+    public class SectionCoordinatorDto
     {
         public string Name { get; set; }
-        public string Group { get; set; }
-        public Guid SchoolId { get; set; }
-        // public string AppUserId { get; set; }
-    
+        public string AppUserId { get; set; }
     }
 }

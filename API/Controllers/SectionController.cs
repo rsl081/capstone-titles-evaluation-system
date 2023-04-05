@@ -65,8 +65,27 @@ namespace API.Controllers
             _dataContext.Sections.Update(section);
             await _dataContext.SaveChangesAsync();
 
-            return Ok("Successfull Updated");
+            return Ok("Successfully Updated");
         }
+
+        [HttpPut("Coordinator/{id}")]
+        public async Task<ActionResult<SectionCreateDto>> AssignSectionCoordinator(
+            Guid id, 
+            SectionCoordinatorDto sectionCreateDto)
+        {
+            var section = await _dataContext.Sections.FindAsync(id);
+
+            if(section == null) return BadRequest();
+
+            _mapper.Map(sectionCreateDto, section);
+
+            _dataContext.Sections.Update(section);
+            await _dataContext.SaveChangesAsync();
+
+            return Ok("Successfully Assigned");
+        }
+
+
 
 
 
