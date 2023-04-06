@@ -36,41 +36,7 @@ namespace API.Controllers
             this._config = config;
         }
 
-        
-        [HttpPost("Login")]
-        public async Task<ActionResult<UserDto>> LoginUser(LoginDto loginDto)
-        {
-            
-            var user = await _userManager.Users
-                .SingleOrDefaultAsync(x => x.Email == loginDto.Email);
-            
-            if(user == null) return Unauthorized();
-
-            var result = await _signInManager.CheckPasswordSignInAsync(
-                user, loginDto.Password, false
-            );
-
-            if (!await _userManager.IsEmailConfirmedAsync(user))
-                return Unauthorized("Email is not confirmed");
-
-            if (!await _userManager.CheckPasswordAsync(user, loginDto.Password))
-                return Unauthorized("Invalid Authentication");
-
-            if(!result.Succeeded)  return Unauthorized();
-
-            return new UserDto
-            {
-                Id = user.Id,
-                // PhotoUrl = user.UserPhoto.Url,
-                Email = user.Email,
-                Token = await _tokenService.CreateToken(user),
-                DisplayName = user.DisplayName,  
-                Created = user.Created,
-            };
-
-        }
-
-        [HttpGet("User/All")]
+        [HttpGet("user/all")]
         public async Task<ActionResult<Pagination<FacultyToReturn>>> GetAllUser()
         {
 
@@ -90,7 +56,7 @@ namespace API.Controllers
 
         }
 
-        [HttpGet("Faculty/All")]
+        [HttpGet("faculty/all")]
         public async Task<ActionResult<Pagination<FacultyToReturn>>> GetAllFaculty()
         {
 
@@ -110,7 +76,7 @@ namespace API.Controllers
 
         }
 
-        [HttpGet("Coordinator/All")]
+        [HttpGet("coordinator/all")]
         public async Task<ActionResult<Pagination<CoordinatorToReturn>>> GetAllCoordinator()
         {
 
@@ -133,7 +99,7 @@ namespace API.Controllers
         }
 
 
-        [HttpPut("Faculty/Edit")]
+        [HttpPut("faculty/edit")]
         public async Task<ActionResult<FacultyUpdateDto>> UpdateFaculty(
             FacultyUpdateDto facultyUpdateDto)
         {  

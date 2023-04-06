@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Entities;
 using Core.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -57,6 +58,25 @@ namespace Infrastructure.Data.Identity
                         // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
                         EmailConfirmed = true,
                         IsApproved = false,
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Student",
+                        Email = "student@test.com",
+                        UserName = "student@test.com",
+                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        EmailConfirmed = true,
+                        Teams = new List<Team> {
+                            new Team {
+                                Name = "Marc"
+                            },
+                            new Team {
+                                Name = "Roy"
+                            },
+                            new Team {
+                                Name = "Renzo"
+                            }
+                        }
                     }
                 };
 
@@ -68,6 +88,7 @@ namespace Infrastructure.Data.Identity
                     new AppRole {Name = "Panel"},
                     new AppRole {Name = "Adviser"},
                     new AppRole {Name = "Faculty"},
+                    new AppRole {Name = "Student"},
                 };
 
                 foreach (var role in roles)
@@ -83,6 +104,7 @@ namespace Infrastructure.Data.Identity
                     if (user.Email == "panel@test.com") await userManager.AddToRoleAsync(user, "Panel");
                     if (user.Email == "adviser@test.com") await userManager.AddToRoleAsync(user, "Adviser");
                     if (user.Email == "faculty@test.com") await userManager.AddToRoleAsync(user, "Faculty");
+                    if (user.Email == "student@test.com") await userManager.AddToRoleAsync(user, "Student");
                 }
 
             }

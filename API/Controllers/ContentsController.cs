@@ -49,7 +49,12 @@ namespace API.Controllers
             if(content == null) return BadRequest();
 
             _dataContext.Contents.Remove(content);
-            await _dataContext.SaveChangesAsync();
+            var result = await _dataContext.SaveChangesAsync();
+
+            if (result <= 0)
+            {
+                return BadRequest("Problem adding deleting content");
+            }
             
             
             return Ok("Successfully Deleted");
@@ -69,7 +74,7 @@ namespace API.Controllers
             _dataContext.Contents.Update(content);
             await _dataContext.SaveChangesAsync();
 
-            return Ok("Successfull Updated");
+            return Ok("Successfully Updated");
         }
 
 

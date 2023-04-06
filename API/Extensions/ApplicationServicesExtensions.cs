@@ -15,6 +15,7 @@ namespace API.Extensions
         {
             
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IFileService, FileService>();
             
 
             return services;

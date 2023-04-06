@@ -37,23 +37,6 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Contents");
                 });
 
-            modelBuilder.Entity("Core.Entities.FileRepo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PublicId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FileRepo");
-                });
-
             modelBuilder.Entity("Core.Entities.Identity.AppRole", b =>
                 {
                     b.Property<string>("Id")
@@ -212,23 +195,24 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("FileName")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("FileRepoId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Grade")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("PublicId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("Status")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("FileRepoId");
 
                     b.ToTable("JustiFiles");
                 });
@@ -415,15 +399,11 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.JustiFile", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
                         .WithMany("JustiFiles")
                         .HasForeignKey("AppUserId");
 
-                    b.HasOne("Core.Entities.FileRepo", "FileRepo")
-                        .WithMany()
-                        .HasForeignKey("FileRepoId");
-
-                    b.Navigation("FileRepo");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Core.Entities.School", b =>
