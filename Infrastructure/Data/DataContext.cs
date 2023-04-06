@@ -15,6 +15,7 @@ namespace Infrastructure.Data
         public DbSet<Content> Contents { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<Section> Sections { get; set; }
+        public DbSet<Team> Teams { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base
         (options)
         {}

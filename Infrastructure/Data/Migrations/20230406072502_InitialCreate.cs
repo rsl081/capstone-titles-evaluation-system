@@ -216,7 +216,7 @@ namespace Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Team",
+                name: "Teams",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -225,9 +225,9 @@ namespace Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Team", x => x.Id);
+                    table.PrimaryKey("PK_Teams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Team_AspNetUsers_AppUserId",
+                        name: "FK_Teams_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
@@ -336,8 +336,8 @@ namespace Infrastructure.Data.Migrations
                 column: "SchoolId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Team_AppUserId",
-                table: "Team",
+                name: "IX_Teams_AppUserId",
+                table: "Teams",
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
@@ -374,7 +374,7 @@ namespace Infrastructure.Data.Migrations
                 name: "Sections");
 
             migrationBuilder.DropTable(
-                name: "Team");
+                name: "Teams");
 
             migrationBuilder.DropTable(
                 name: "UserPhoto");
