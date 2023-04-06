@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
+using CloudinaryDotNet.Actions;
 using Core.Entities;
 using Core.Entities.Identity;
+using Infrastructure.Services;
 
 namespace API.Helpers
 {
@@ -17,6 +19,9 @@ namespace API.Helpers
             CreateMap<SYCreateDto, School>();
             CreateMap<SectionCreateDto, Section>();
             CreateMap<SectionCoordinatorDto, Section>();
+            CreateMap<JustiCreateDto, JustiFile>().ReverseMap();
+            CreateMap<JustiUpdateDto, JustiFile>();
+            CreateMap<RawUploadResult , JustiFile>();
 
             CreateMap<AppUser, FacultyToReturn>()
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
