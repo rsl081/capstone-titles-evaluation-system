@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230406015813_InitialCreate")]
+    [Migration("20230406072502_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,7 +281,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Team");
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

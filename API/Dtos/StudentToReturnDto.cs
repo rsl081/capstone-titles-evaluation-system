@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace API.Dtos
 {
-    public class UserDto
+    public class StudentToReturnDto
     {
         public string Id { get; set; }
         public string PhotoUrl { get; set; }
         public string Email { get; set; }
         public string DisplayName { get; set; }
-        public string Expertise { get; set; }
+        public List<string> Teams { get; set; } = new List<string>();
         public string Token { get; set; }
         
         [JsonIgnore]

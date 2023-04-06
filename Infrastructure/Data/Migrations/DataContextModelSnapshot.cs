@@ -279,7 +279,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Team");
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

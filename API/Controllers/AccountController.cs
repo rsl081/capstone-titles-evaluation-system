@@ -68,11 +68,137 @@ namespace API.Controllers
 
         }
 
-        // [HttpPost("capstone-group/register")]
-        // public async Task<ActionResult> RegisterCapstoneGroup()
-        // {
+        [HttpPost("faculty/register")]
+        public async Task<ActionResult<UserDto>> RegisterFaculty(
+            RegisterUserDto registerFacultyDto)
+        {
+
+            var user = new AppUser
+            {
+                DisplayName = registerFacultyDto.DisplayName,
+                Email = registerFacultyDto.Email,
+                UserName = registerFacultyDto.Email,
+                Expertise = registerFacultyDto.Expertise,
+                // UserPhoto = new UserPhoto("assets/img/user_icon_default.png")
+            };
+
+            var result = await _userManager.CreateAsync(
+                user, 
+                registerFacultyDto.Password);
+
+            if(!result.Succeeded) {
+
+                return BadRequest("A problem creating the faculty");
+            }
+
+            // if(result.Succeeded)
+            // {
+
+            //     var confirmationToken = await _userManager
+            //                                     .GenerateEmailConfirmationTokenAsync(user);
+                
             
-        // }
+            //     var uriBuilder = new UriBuilder(_config["ReturnPaths:ConfirmEmail"]);
+            //     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            //     query["userId"] = user.Id;
+            //     query["token"] = confirmationToken;
+            //     uriBuilder.Query = query.ToString();
+            //     var urlString = uriBuilder.ToString();
+
+            //     await _emailService.SendAsync(
+            //         "rodriguez.johnrussel.d.1592@gmail.com",
+            //         user.Email, 
+            //         "Please confirm your email",
+            //         $"Please click on this link to confirm your email <a href=\"{urlString}\">Verify Email</a>");
+                
+            // }
+
+
+            var roleAddResult = 
+                await _userManager.AddToRoleAsync(user, "Faculty");
+            
+            if (!roleAddResult.Succeeded){
+
+              return BadRequest("Failed to add to role");  
+            }
+
+            return new UserDto
+            {
+                Id = user.Id,
+                // PhotoUrl = user.UserPhoto.Url,
+                DisplayName = user.DisplayName,
+                Expertise = user.Expertise,
+                Token = await _tokenService.CreateToken(user),
+                Email = user.Email,
+                Created = user.Created
+            };
+        }
+
+        [HttpPost("capstone-group/register")]
+        public async Task<ActionResult<StudentToReturnDto>> RegisterCapstoneGroup(
+            RegisterStudentDto registerStudentDto
+        )
+        {
+             var user = new AppUser
+            {
+                DisplayName = registerStudentDto.DisplayName,
+                Email = registerStudentDto.Email,
+                UserName = registerStudentDto.Email,
+                // Teams = registerStudentDto.Teams,
+                // UserPhoto = new UserPhoto("assets/img/user_icon_default.png")
+            };
+
+            var result = await _userManager.CreateAsync(
+                user, 
+                registerStudentDto.Password);
+
+            if(!result.Succeeded) {
+
+                return BadRequest("A problem creating the faculty");
+            }
+
+            // if(result.Succeeded)
+            // {
+
+            //     var confirmationToken = await _userManager
+            //                                     .GenerateEmailConfirmationTokenAsync(user);
+                
+            
+            //     var uriBuilder = new UriBuilder(_config["ReturnPaths:ConfirmEmail"]);
+            //     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            //     query["userId"] = user.Id;
+            //     query["token"] = confirmationToken;
+            //     uriBuilder.Query = query.ToString();
+            //     var urlString = uriBuilder.ToString();
+
+            //     await _emailService.SendAsync(
+            //         "rodriguez.johnrussel.d.1592@gmail.com",
+            //         user.Email, 
+            //         "Please confirm your email",
+            //         $"Please click on this link to confirm your email <a href=\"{urlString}\">Verify Email</a>");
+                
+            // }
+
+
+            var roleAddResult = 
+                await _userManager.AddToRoleAsync(user, "Student");
+            
+            if (!roleAddResult.Succeeded){
+
+              return BadRequest("Failed to add to role");  
+            }
+
+            return new StudentToReturnDto
+            {
+                Id = user.Id,
+                // PhotoUrl = user.UserPhoto.Url,
+                DisplayName = user.DisplayName,
+                // Teams = user.Teams,
+                Token = await _tokenService.CreateToken(user),
+                Email = user.Email,
+                Created = user.Created
+            };
+        }
 
     }
 }
