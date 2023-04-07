@@ -35,7 +35,7 @@ namespace API.Controllers
             this._config = config;
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<ActionResult<UserDto>> LoginUser(LoginDto loginDto)
         {
             
@@ -87,7 +87,6 @@ namespace API.Controllers
                 registerFacultyDto.Password);
 
             if(!result.Succeeded) {
-
                 return BadRequest("A problem creating the faculty");
             }
 
@@ -96,7 +95,6 @@ namespace API.Controllers
 
             //     var confirmationToken = await _userManager
             //                                     .GenerateEmailConfirmationTokenAsync(user);
-                
             
             //     var uriBuilder = new UriBuilder(_config["ReturnPaths:ConfirmEmail"]);
             //     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
