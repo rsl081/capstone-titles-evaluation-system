@@ -1,1 +1,78 @@
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+
+<div class="mx-auto px-4 py-4 sm:px-8 lg:container">
+  <!-- Header -->
+    <div class="mb-4 flex justify-between">
+        <div class="inline-block">
+            <h3 class="font-semibold text-gray-900 dark:text-white">Dashboard</h3>
+        </div>
+    </div>
+
+    <div class="flex xl:flex-row md:flex-col sm:flex-col">
+        
+        <div class="basis-1/4 m-4 rounded-lg bg-white p-8 dark:bg-night-700">
+            
+            <div class="text-base text-gray-600 dark:text-white">
+                
+                <div class="flex items-center justify-left">
+                    <a class="rounded bg-primary-500 p-2">
+                    <svg-icon src="assets/icons/solid/user.svg" [svgClass]="'h-8 w-8'"> </svg-icon>
+                    </a>
+                    <div class="flex flex-col">
+                        <b class="text-md pl-3 font-semibold text-gray-700 dark:text-white"> Adviser </b>
+                        <p class="text-sm pl-3 text-gray-700 dark:text-white"> {{sumOfAdviser}} </p>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="basis-1/4 m-4 rounded-lg bg-white p-8 dark:bg-night-700">
+            
+            <div class="text-base text-gray-600 dark:text-white">
+                
+                <div class="flex items-center justify-left">
+                    <a class="rounded bg-primary-500 p-2">
+                    <svg-icon src="assets/icons/solid/user.svg" [svgClass]="'h-8 w-8'"> </svg-icon>
+                    </a>
+                    <div class="flex flex-col">
+                        <b class="text-md pl-3 font-semibold text-gray-700 dark:text-white"> Coordinator </b>
+                        <p class="text-sm pl-3 text-gray-700 dark:text-white"> {{sumOfCoordinator}} </p>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="basis-1/4 m-4 rounded-lg bg-white p-8 dark:bg-night-700">
+            
+            <div class="text-base text-gray-600 dark:text-white">
+                
+                <div class="flex items-center justify-left">
+                    <a class="rounded bg-primary-500 p-2">
+                    <svg-icon src="assets/icons/solid/user-group.svg" [svgClass]="'h-8 w-8'"> </svg-icon>
+                    </a>
+                    <div class="flex flex-col">
+                        <b class="text-md pl-3 font-semibold text-gray-700 dark:text-white"> Panel </b>
+                        <p class="text-sm pl-3 text-gray-700 dark:text-white"> {{sumOfPanel}} </p>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="basis-1/4 m-4 rounded-lg bg-white p-8 dark:bg-night-700">
+            
+            <div class="text-base text-gray-600 dark:text-white">
+                
+                <div class="flex items-center justify-left">
+                    <a class="rounded bg-primary-500 p-2">
+                    <svg-icon src="assets/icons/solid/users.svg" [svgClass]="'h-8 w-8'"> </svg-icon>
+                    </a>
+                    <div class="flex flex-col">
+                        <b class="text-md pl-3 font-semibold text-gray-700 dark:text-white"> Admin </b>
+                        <p class="text-sm pl-3 text-gray-700 dark:text-white"> {{sumOfAdmin}} </p>
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+    </div>
+
+    <div faculty-table class="md:col-span-2 xl:col-span-3"></div>
+    <!-- <faculty-table></faculty-table> -->
+</div>

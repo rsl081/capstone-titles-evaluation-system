@@ -33,12 +33,12 @@ export class Menu {
         {
           icon: 'assets/icons/outline/users.svg',
           label: 'Dashboard',
-          route: '/download',
+          route: '/dashboard',
         },
         {
           icon: 'assets/icons/outline/users.svg',
           label: 'Research',
-          route: '/gift',
+          route: '/download',
         },
         {
           icon: 'assets/icons/outline/users.svg',
@@ -48,7 +48,7 @@ export class Menu {
         {
           icon: 'assets/icons/outline/users.svg',
           label: 'Content',
-          route: '/users',
+          route: '/content',
         },
       ],
     },

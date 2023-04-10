@@ -46,4 +46,25 @@ export class AccountService {
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
   }
+
+  totalAdviser() {
+    return this.http.get<any>(this.baseURL + 'account/adviser/total')
+    .pipe(total => total);
+  }
+
+  totalCoordinator() {
+    return this.http.get<any>(this.baseURL + 'account/coordinator/total')
+    .pipe(total => total);
+  }
+
+  totalPanel() {
+    return this.http.get<any>(this.baseURL + 'account/panel/total')
+    .pipe(total => total);
+  }
+
+  totalAdmin() {
+    return this.http.get<any>(this.baseURL + 'account/admin/total')
+    .pipe(total => total);
+  }
+
 }

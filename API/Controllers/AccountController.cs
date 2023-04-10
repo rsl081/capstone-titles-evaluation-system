@@ -198,5 +198,56 @@ namespace API.Controllers
             };
         }
 
+        [HttpGet("coordinator/total")]
+        public async Task<ActionResult> GetTotalCoordinator()
+        {
+
+            var user = await _userManager.Users
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Coordinator"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            return Ok(totalItems);
+        }
+
+        [HttpGet("adviser/total")]
+        public async Task<ActionResult> GetTotalAdviser()
+        {
+
+            var user = await _userManager.Users
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Adviser"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            return Ok(totalItems);
+        }
+
+        [HttpGet("panel/total")]
+        public async Task<ActionResult> GetTotalPanel()
+        {
+
+            var user = await _userManager.Users
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Panel"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            return Ok(totalItems);
+        }
+
+        [HttpGet("admin/total")]
+        public async Task<ActionResult> GetTotalAdmin()
+        {
+            var user = await _userManager.Users
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Admin"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            return Ok(totalItems);
+        }
+
     }
 }
