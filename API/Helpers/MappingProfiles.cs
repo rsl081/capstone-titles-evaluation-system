@@ -24,6 +24,7 @@ namespace API.Helpers
             CreateMap<RawUploadResult , JustiFile>();
 
             CreateMap<AppUser, FacultyToReturn>()
+                .ForMember(p => p.UserPhoto, o => o.MapFrom<FacultyUrlResolver>())
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
                 .ForMember(p => p.UserRoles, o => 
                     o.MapFrom(s => s.UserRoles.Select(user => user.Role)));

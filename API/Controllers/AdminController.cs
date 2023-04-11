@@ -112,7 +112,7 @@ namespace API.Controllers
 
             await _userManager.UpdateAsync(faculty);
            
-            return Ok("Successfully Updated");
+            return Ok();
         }
 
         [HttpPut("faculty/edit-roles/{username}")]
