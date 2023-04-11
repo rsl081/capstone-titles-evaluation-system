@@ -23,6 +23,8 @@ export class DashboardComponent implements OnInit {
     this.totalAdmin();
   }
 
+  
+
   totalCoordinator() {
     this._accountService.totalCoordinator().subscribe({
       next: (response) => (this.sumOfCoordinator = response),

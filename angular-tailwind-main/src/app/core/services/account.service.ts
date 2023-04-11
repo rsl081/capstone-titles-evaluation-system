@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, ReplaySubject, Subject } from 'rxjs';
-import { IUser } from 'src/app/shared/models/user';
+import { IUser, IUserRoot } from 'src/app/shared/models/user';
 import { environment } from 'src/environments/environment';
 
 
@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AccountService {
+
   private baseURL = environment.apiUrl;
   public currentUserSource = new ReplaySubject<IUser>(1);
   currentUser$ = this.currentUserSource.asObservable();
@@ -48,23 +49,29 @@ export class AccountService {
   }
 
   totalAdviser() {
-    return this.http.get<any>(this.baseURL + 'account/adviser/total')
-    .pipe(total => total);
+    return this.http.get<any>(this.baseURL + 'account/adviser/total').pipe((total) => total);
   }
 
   totalCoordinator() {
-    return this.http.get<any>(this.baseURL + 'account/coordinator/total')
-    .pipe(total => total);
+    return this.http.get<any>(this.baseURL + 'account/coordinator/total').pipe((total) => total);
   }
 
   totalPanel() {
-    return this.http.get<any>(this.baseURL + 'account/panel/total')
-    .pipe(total => total);
+    return this.http.get<any>(this.baseURL + 'account/panel/total').pipe((total) => total);
   }
 
   totalAdmin() {
-    return this.http.get<any>(this.baseURL + 'account/admin/total')
-    .pipe(total => total);
+    return this.http.get<any>(this.baseURL + 'account/admin/total').pipe((total) => total);
   }
+
+  getAllFaculty() {
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all').pipe(map((file) => file.data));
+  }
+
+  
+  editFaculty(faculty: {}) {
+    return this.http.put(this.baseURL + 'admin/faculty/edit', faculty);
+  }
+
 
 }

@@ -1,11 +1,17 @@
 export interface IUser {
   id?: string;
-  photoUrl?: string;
+  userPhoto?: string;
   email?: string;
   displayName?: string;
   token?: string;
   createdAt?: string;
   expertise?: string;
   role?: string;
-  approval?: boolean;
+  isApproved?: boolean;
+}
+
+
+export interface IUserRoot {
+  count: number;
+  data: IUser[];
 }

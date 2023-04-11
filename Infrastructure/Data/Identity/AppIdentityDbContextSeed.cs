@@ -23,7 +23,7 @@ namespace Infrastructure.Data.Identity
                         DisplayName = "Admin",
                         Email = "admin@test.com",
                         UserName = "admin@test.com",
-                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        UserPhoto = new UserPhoto("assets/img/Admin.png"),
                         EmailConfirmed = true,
                     },
                     new AppUser
@@ -31,7 +31,7 @@ namespace Infrastructure.Data.Identity
                         DisplayName = "Coordinator",
                         Email = "coordinator@test.com",
                         UserName = "coordinator@test.com",
-                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        UserPhoto = new UserPhoto("assets/img/Faculty.png"),
                         EmailConfirmed = true,
                     },
                     new AppUser
@@ -39,7 +39,7 @@ namespace Infrastructure.Data.Identity
                         DisplayName = "Panel",
                         Email = "panel@test.com",
                         UserName = "panel@test.com",
-                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        UserPhoto = new UserPhoto("assets/img/Faculty.png"),
                         EmailConfirmed = true,
                     },
                     new AppUser
@@ -47,7 +47,7 @@ namespace Infrastructure.Data.Identity
                         DisplayName = "Adviser",
                         Email = "adviser@test.com",
                         UserName = "adviser@test.com",
-                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        UserPhoto = new UserPhoto("assets/img/Faculty.png"),
                         EmailConfirmed = true,
                     },
                     new AppUser
@@ -55,7 +55,8 @@ namespace Infrastructure.Data.Identity
                         DisplayName = "Faculty",
                         Email = "faculty@test.com",
                         UserName = "faculty@test.com",
-                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        UserPhoto = new UserPhoto("assets/img/Faculty.png"),
+                        Expertise = "Networking",
                         EmailConfirmed = true,
                         IsApproved = false,
                     },
@@ -64,7 +65,7 @@ namespace Infrastructure.Data.Identity
                         DisplayName = "Student",
                         Email = "student@test.com",
                         UserName = "student@test.com",
-                        // UserPhoto = new UserPhoto("assets/img/user_icon_default.png"),
+                        UserPhoto = new UserPhoto("assets/img/Student.png"),
                         EmailConfirmed = true,
                         Teams = new List<Team> {
                             new Team {
