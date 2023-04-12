@@ -41,8 +41,9 @@ export class FacultyTableItemComponent implements OnInit {
     this._accountService.editFaculty(myFaculty).subscribe({
       error: (e) => { console.log(e) },
       complete: () => {
-        // console.log('nice')
-        this.closeDialog();
+        
+        window.location.reload();
+
       },
     });
 

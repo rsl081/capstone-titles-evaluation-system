@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   sumOfPanel: number = 0;
   sumOfAdmin: number = 0;
 
+
   constructor(private _accountService: AccountService) {}
 
   ngOnInit(): void {
@@ -21,6 +22,12 @@ export class DashboardComponent implements OnInit {
     this.totalAdviser();
     this.totalPanel();
     this.totalAdmin();
+    
+    let user = localStorage.getItem('user');
+    let obj = JSON.parse(user);
+
+    console.log(obj.role + 'test');
+    
   }
 
   
