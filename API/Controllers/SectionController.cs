@@ -28,7 +28,7 @@ namespace API.Controllers
             _dataContext.Sections.Add(section);
             await _dataContext.SaveChangesAsync();
 
-            return Ok("Successfully Created");
+            return Ok();
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace API.Controllers
             _dataContext.Sections.Remove(section);
             await _dataContext.SaveChangesAsync();
             
-            return Ok("Successfully Deleted");
+            return Ok();
         }
 
 
@@ -65,7 +65,7 @@ namespace API.Controllers
             _dataContext.Sections.Update(section);
             await _dataContext.SaveChangesAsync();
 
-            return Ok("Successfully Updated");
+            return Ok();
         }
 
         [HttpPut("Coordinator/{id}")]

@@ -1,0 +1,193 @@
+<div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row">
+  <div class="mb-4 flex items-center justify-between">
+    <div class="flex-col items-center">
+      <h3 class="text-md font-bold text-gray-900 dark:text-night-50">School Year {{year}}</h3>
+      <span class="text-sm text-gray-400 dark:text-night-300">Sections</span>
+    </div>
+    
+    <button
+      (click)="toggleSectionDialog()"
+      class="flex-none rounded-md bg-gray-100 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+      Add Section
+    </button>
+    <button
+     (click)="toggleYearDialog()"
+      class="flex-none rounded-md bg-gray-100 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+      Add Year
+    </button>
+
+    <!-- DropDown -->
+
+    <div class="relative inline-block text-left">
+        <div>
+            <button 
+                (click)="toggleDropDown()"
+                type="button" class="dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+            Options
+            <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+            </button>
+        </div>
+        <div 
+            *ngIf="isDropDownOpen"
+            class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div class="py-1" role="none">
+            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                <button 
+                    *ngFor="let sy of activeSY"
+                    (click)="setYear(sy.schoolYear)"
+                    class="text-gray-700 block px-4 py-2 text-sm" 
+                    role="menuitem" 
+                    tabindex="-1" 
+                    id="menu-item-0">{{sy.schoolYear}}</button>
+            
+            </div>
+        </div>
+
+    </div>
+
+  </div>
+
+  <div class="relative overflow-x-auto">
+    <table class="w-full table-auto">
+     
+      <thead class="text-xs uppercase text-gray-400 dark:text-night-300">
+        <tr>
+          <th class="py-3 text-left">Section</th>
+          <th class="py-3 text-right">Group</th>
+          <th class="py-3 text-right">Action</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr
+          *ngFor="let school of activeSchool"
+          [school]="school"
+          school-table-item
+          class="border-b border-dashed border-gray-200 hover:bg-gray-100 dark:border-night-500 dark:hover:bg-night-600"></tr>
+      </tbody>
+      
+    </table>
+  </div>
+</div>
+
+<div *ngIf="isOpenYearDialog">
+   <!-- overlay -->
+  <div
+    class="z-20 fixed top-0 left-0 right-0 bottom-0 opacity-50 bg-neutral-900 dark:opacity-80"
+  ></div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="addYearForm" autocomplete="off">
+    <div
+      class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg flex flex-col gap-2 justify-center items-center z-40 fixed w-11/12 sm:w-1/2 lg:w-1/3 xl:w-1/4 top-0 left-0 right-0 bottom-0 m-auto h-min p-4"
+    >
+      <h2 class="mb-4 font-bold text-xl text-gray-600 dark:text-white">
+        Add Year
+      </h2>
+
+      <div class="form__group mb-4">
+            <div class="relative">
+                <input 
+                type="text"
+                formControlName="schoolYear"
+                id="schoolYear" class="peer block" placeholder=" " />
+                <label
+                for="schoolYear"
+                class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-500 dark:bg-night-700 dark:text-night-200">
+                Year
+                </label>
+            </div>
+        </div>
+
+      <div class="flex w-full gap-3">
+        <button
+          type="submit"
+          class="flex-1 max-w-xs rounded-full relative overflow-hidden inline-flex group items-center justify-center bg-primary-500 text-white px-10 py-2"
+        >
+          <span
+            class="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-80 group-hover:h-80 lg:group-hover:w-56 lg:group-hover:h-56 xl:group-hover:w-80 xl:group-hover:h-80 opacity-10"
+          ></span>
+          <span class="relative">Add</span>
+        </button>
+        <button
+          (click)="toggleYearDialog()"
+          class="flex-1 max-w-xs rounded-full relative overflow-hidden inline-flex group items-center justify-center bg-[#888888] text-white px-10 py-2"
+        >
+          <span
+            class="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-80 group-hover:h-80 lg:group-hover:w-56 lg:group-hover:h-56 xl:group-hover:w-80 xl:group-hover:h-80 opacity-10"
+          ></span>
+          <span class="relative">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<div *ngIf="isOpenSectionDialog">
+   <!-- overlay -->
+  <div
+    class="z-20 fixed top-0 left-0 right-0 bottom-0 opacity-50 bg-neutral-900 dark:opacity-80"
+  ></div>
+
+  <form (ngSubmit)="onSubmitSection()" [formGroup]="addSectionForm" autocomplete="off">
+    <div
+      class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg flex flex-col gap-2 justify-center items-center z-40 fixed w-11/12 sm:w-1/2 lg:w-1/3 xl:w-1/4 top-0 left-0 right-0 bottom-0 m-auto h-min p-4"
+    >
+      <h2 class="mb-4 font-bold text-xl text-gray-600 dark:text-white">
+        Add Section
+      </h2>
+
+      <div class="form__group mb-4">
+            <div class="relative">
+                <input 
+                type="text"
+                formControlName="sectionName"
+                id="sectionName" class="peer block" placeholder=" " />
+                <label
+                for="sectionName"
+                class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-500 dark:bg-night-700 dark:text-night-200">
+                Section
+                </label>
+            </div>
+        </div>
+
+      <div class="form__group mb-4">
+            <div class="relative">
+                <input 
+                type="text"
+                formControlName="sectionGroup"
+                id="sectionGroup" class="peer block" placeholder=" " />
+                <label
+                for="sectionGroup"
+                class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-500 dark:bg-night-700 dark:text-night-200">
+                Group
+                </label>
+            </div>
+        </div>
+
+      <div class="flex w-full gap-3">
+        <button
+          type="submit"
+          class="flex-1 max-w-xs rounded-full relative overflow-hidden inline-flex group items-center justify-center bg-primary-500 text-white px-10 py-2"
+        >
+          <span
+            class="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-80 group-hover:h-80 lg:group-hover:w-56 lg:group-hover:h-56 xl:group-hover:w-80 xl:group-hover:h-80 opacity-10"
+          ></span>
+          <span class="relative">Add</span>
+        </button>
+        <button
+          (click)="toggleSectionDialog()"
+          class="flex-1 max-w-xs rounded-full relative overflow-hidden inline-flex group items-center justify-center bg-[#888888] text-white px-10 py-2"
+        >
+          <span
+            class="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-80 group-hover:h-80 lg:group-hover:w-56 lg:group-hover:h-56 xl:group-hover:w-80 xl:group-hover:h-80 opacity-10"
+          ></span>
+          <span class="relative">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

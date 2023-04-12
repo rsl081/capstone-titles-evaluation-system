@@ -17,6 +17,9 @@ import { NftAuctionsTableComponent } from './components/nft/nft-auctions-table/n
 import { NftAuctionsTableItemComponent } from './components/nft/nft-auctions-table-item/nft-auctions-table-item.component';
 import { FacultyTableComponent } from './components/faculty-table/faculty-table.component';
 import { FacultyTableItemComponent } from './components/faculty-table-item/faculty-table-item.component';
+import { SchoolTableComponent } from './components/school-table/school-table.component';
+import { SchoolTableItemComponent } from './components/school-table-item/school-table-item.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import { FacultyTableItemComponent } from './components/faculty-table-item/facul
     NftAuctionsTableItemComponent,
     FacultyTableComponent,
     FacultyTableItemComponent,
+    SchoolTableComponent,
+    SchoolTableItemComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +43,8 @@ import { FacultyTableItemComponent } from './components/faculty-table-item/facul
     HttpClientModule,
     NgApexchartsModule,
     AngularSvgIconModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class DashboardModule {}

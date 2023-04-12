@@ -29,7 +29,7 @@ namespace API.Controllers
             _dataContext.Schools.Add(schoolYear);
             await _dataContext.SaveChangesAsync();
 
-            return Ok("Successfully Created");
+            return Ok();
         }
 
         [HttpGet]
@@ -37,7 +37,18 @@ namespace API.Controllers
         {
             return Ok(await _dataContext.Schools
                             .Include(s => s.Sections)
-                            .FirstOrDefaultAsync());
+                            .ToListAsync());
+        }
+
+        [HttpGet("{schoolYear}")]
+        public async Task<ActionResult> GetSpecificSY(
+            string schoolYear
+        )
+        {
+            return Ok(await _dataContext.Schools
+                            .Include(s => s.Sections)
+                            .Where(x => x.SchoolYear == schoolYear)
+                            .ToListAsync());
         }
 
         [HttpDelete("{id}")]

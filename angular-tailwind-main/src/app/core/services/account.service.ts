@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AccountService {
-
   private baseURL = environment.apiUrl;
   public currentUserSource = new ReplaySubject<IUser>(1);
   currentUser$ = this.currentUserSource.asObservable();
@@ -47,6 +46,11 @@ export class AccountService {
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
   }
+  
+  logout(): void {
+    localStorage.removeItem('user');
+    this.setCurrentUser(null);
+  }
 
   totalAdviser() {
     return this.http.get<any>(this.baseURL + 'account/adviser/total').pipe((total) => total);
@@ -68,10 +72,7 @@ export class AccountService {
     return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all').pipe(map((file) => file.data));
   }
 
-  
   editFaculty(faculty: {}) {
     return this.http.put(this.baseURL + 'admin/faculty/edit', faculty);
   }
-
-
 }
