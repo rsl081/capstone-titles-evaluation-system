@@ -68,10 +68,10 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPut("Coordinator/{id}")]
-        public async Task<ActionResult<SectionCreateDto>> AssignSectionCoordinator(
+        [HttpPut("Assign/{id}")]
+        public async Task<ActionResult<SectionAssignDto>> AssignSectionCoordinator(
             Guid id, 
-            SectionCoordinatorDto sectionCreateDto)
+            SectionAssignDto sectionCreateDto)
         {
             var section = await _dataContext.Sections.FindAsync(id);
 
@@ -82,7 +82,7 @@ namespace API.Controllers
             _dataContext.Sections.Update(section);
             await _dataContext.SaveChangesAsync();
 
-            return Ok("Successfully Assigned");
+            return Ok();
         }
 
 

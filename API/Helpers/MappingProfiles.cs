@@ -19,6 +19,7 @@ namespace API.Helpers
             CreateMap<SYCreateDto, School>();
             CreateMap<SectionCreateDto, Section>();
             CreateMap<SectionCoordinatorDto, Section>();
+            CreateMap<SectionAssignDto, Section>();
             CreateMap<JustiCreateDto, JustiFile>().ReverseMap();
             CreateMap<JustiUpdateDto, JustiFile>();
             CreateMap<RawUploadResult , JustiFile>();
@@ -33,6 +34,15 @@ namespace API.Helpers
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
                 .ForMember(p => p.Sections, o => 
                     o.MapFrom(s => s.Sections.Select(s => s.Name)));
+
+            CreateMap<AppUser, StudentToReturnDto>()
+                .ForMember(p => p.UserPhoto, o => o.MapFrom<StudUrlResolver>())
+                .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
+                .ForMember(p => p.Sections, o => 
+                    o.MapFrom(s => s.Sections.Select(s => s)))
+                .ForMember(j => j.JustiFile, o => o.MapFrom(
+                    s => s.JustiFiles.Select(j => j)
+                ));
 
             CreateMap<FacultyUpdateDto, AppUser>();
         }

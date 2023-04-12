@@ -69,10 +69,18 @@ export class AccountService {
   }
 
   getAllFaculty() {
-    return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all').pipe(map((file) => file.data));
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all')
+      .pipe(map((f) => f.data));
+  }
+
+  getAllStudent() {
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/student/all')
+      .pipe(map((s) => s.data));
   }
 
   editFaculty(faculty: {}) {
     return this.http.put(this.baseURL + 'admin/faculty/edit', faculty);
   }
+
+
 }

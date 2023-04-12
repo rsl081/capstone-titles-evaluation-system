@@ -8,6 +8,8 @@ export interface IUser {
   expertise?: string;
   role?: string;
   isApproved?: boolean;
+  sections?: [];
+  justiFile?: [];
 }
 
 

@@ -31,22 +31,22 @@ export class Menu {
       separator: true,
       items: [
         {
-          icon: 'assets/icons/outline/users.svg',
+          icon: 'assets/icons/outline/global-alt.svg',
           label: 'Dashboard',
           route: '/dashboard',
         },
         {
-          icon: 'assets/icons/outline/users.svg',
-          label: 'Research',
-          route: '/download',
+          icon: 'assets/icons/outline/chart-bar.svg',
+          label: 'Report',
+          route: '/report',
         },
         {
-          icon: 'assets/icons/outline/users.svg',
+          icon: 'assets/icons/outline/user.svg',
           label: 'Account',
-          route: '/users',
+          route: '/account',
         },
         {
-          icon: 'assets/icons/outline/users.svg',
+          icon: 'assets/icons/outline/clipboard-document-list.svg',
           label: 'Content',
           route: '/content',
         },

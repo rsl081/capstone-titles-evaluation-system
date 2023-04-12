@@ -98,6 +98,29 @@ namespace API.Controllers
 
         }
 
+        
+        [HttpGet("student/all")]
+        public async Task<ActionResult<Pagination<StudentToReturnDto>>> GetAllStudent()
+        {
+
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(j => j.JustiFiles)
+                .Include(r => r.UserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(s => s.Sections)
+                .ThenInclude(s => s.School)
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Student"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            var data = _mapper.Map<IReadOnlyList<AppUser>,
+                IReadOnlyList<StudentToReturnDto>>(user);
+
+            return Ok(new Pagination<StudentToReturnDto>(totalItems, data));
+
+        }
 
         [HttpPut("faculty/edit")]
         public async Task<ActionResult<FacultyUpdateDto>> UpdateFaculty(

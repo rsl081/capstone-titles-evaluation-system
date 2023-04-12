@@ -13,8 +13,17 @@ const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () => import('../content/content.module').then((m) => m.ContentModule),
   },
+  {
+    path: 'report',
+    component: LayoutComponent,
+    loadChildren: () => import('../report/report.module').then((m) => m.ReportModule),
+  },
+  {
+    path: 'account',
+    component: LayoutComponent,
+    loadChildren: () => import('../account/account.module').then((m) => m.AccountModule),
+  },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  // { path: 'content', component: ContentComponent},
   { path: '**', redirectTo: 'error/404' },
 ];
 
