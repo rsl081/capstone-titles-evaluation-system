@@ -24,12 +24,25 @@ export class SchoolService {
     return this.http.post<any>(this.baseURL + 'school', schoolYear);
   }
 
+  //* Section
   addSection(section: any) {
     return this.http.post<any>(this.baseURL + 'section', section);
   }
-  
+
   deleteSection(id: any) {
     return this.http.delete<any>(this.baseURL + 'section/' + id);
   }
 
+  getSection() {
+    return this.http.get<any>(this.baseURL + 'section').pipe((s) => s);
+  }
+  
+  assignSection(id: any, coordinatorId: any) {
+    return this.http.put<any>(this.baseURL + 'section/assign/'+ id, coordinatorId)
+      .pipe((s) => s);
+  }
+
+  addGroup(gr: any) {
+    return this.http.post<any>(this.baseURL + 'group', gr);
+  }
 }

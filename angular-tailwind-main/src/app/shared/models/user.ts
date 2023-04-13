@@ -7,8 +7,9 @@ export interface IUser {
   createdAt?: string;
   expertise?: string;
   role?: string;
+  userRoles?: [];
   isApproved?: boolean;
-  sections?: [];
+  sections?: any;
   justiFile?: [];
 }
 

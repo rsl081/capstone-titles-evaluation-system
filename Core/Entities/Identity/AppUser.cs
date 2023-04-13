@@ -16,6 +16,7 @@ namespace Core.Entities.Identity
         public bool IsApproved { get; set; }
         public List<School> Schools { get; set; } = new List<School>();
         public List<Section> Sections { get; set; } = new List<Section>();
+        public List<Group> Groups { get; set; } = new List<Group>();
         // Student
         public List<Team> Teams { get; set; } = new List<Team>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();

@@ -19,9 +19,10 @@
     <!-- DropDown -->
 
     <div class="relative inline-block text-left">
+      
         <div>
             <button 
-                (click)="toggleDropDown()"
+                (click)="toggleDropDown(); "
                 type="button" class="dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
             Options
             <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -36,7 +37,7 @@
             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                 <button 
                     *ngFor="let sy of activeSY"
-                    (click)="setYear(sy.schoolYear)"
+                    (click)="setYear(sy.schoolYear); toggleDropDown()"
                     class="text-gray-700 block px-4 py-2 text-sm" 
                     role="menuitem" 
                     tabindex="-1" 
@@ -63,7 +64,7 @@
       <tbody>
         <tr
           *ngFor="let school of activeSchool"
-          [school]="school"
+          [section]="school"
           school-table-item
           class="border-b border-dashed border-gray-200 hover:bg-gray-100 dark:border-night-500 dark:hover:bg-night-600"></tr>
       </tbody>
@@ -78,7 +79,7 @@
     class="z-20 fixed top-0 left-0 right-0 bottom-0 opacity-50 bg-neutral-900 dark:opacity-80"
   ></div>
 
-  <form (ngSubmit)="onSubmit()" [formGroup]="addYearForm" autocomplete="off">
+  <form (ngSubmit)="onSubmitYear()" [formGroup]="addYearForm" autocomplete="off">
     <div
       class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg flex flex-col gap-2 justify-center items-center z-40 fixed w-11/12 sm:w-1/2 lg:w-1/3 xl:w-1/4 top-0 left-0 right-0 bottom-0 m-auto h-min p-4"
     >
@@ -149,20 +150,6 @@
                 for="sectionName"
                 class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-500 dark:bg-night-700 dark:text-night-200">
                 Section
-                </label>
-            </div>
-        </div>
-
-      <div class="form__group mb-4">
-            <div class="relative">
-                <input 
-                type="text"
-                formControlName="sectionGroup"
-                id="sectionGroup" class="peer block" placeholder=" " />
-                <label
-                for="sectionGroup"
-                class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-500 dark:bg-night-700 dark:text-night-200">
-                Group
                 </label>
             </div>
         </div>

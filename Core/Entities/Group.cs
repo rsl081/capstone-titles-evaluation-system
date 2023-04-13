@@ -7,16 +7,14 @@ using Core.Entities.Identity;
 
 namespace Core.Entities
 {
-    public class Section : BaseEntity
+    public class Group : BaseEntity
     {
-        public string Name { get; set; }
-        public List<Group> Groups { get; set; } = new List<Group>();
+        public string GroupName { get; set; }
         [JsonIgnore]
-        public School School { get; set; }
-        public Guid SchoolId { get; set; }
+        public Section Section { get; set; }
+        public Guid SectionId { get; set; }
         [JsonIgnore]
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
-        // public Guid SchoolId { get; set; }
     }
 }
