@@ -46,7 +46,7 @@ export class AccountService {
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
   }
-  
+
   logout(): void {
     localStorage.removeItem('user');
     this.setCurrentUser(null);
@@ -69,18 +69,24 @@ export class AccountService {
   }
 
   getAllFaculty() {
-    return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all')
-      .pipe(map((f) => f.data));
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all').pipe(map((f) => f.data));
   }
 
   getAllStudent() {
-    return this.http.get<IUserRoot>(this.baseURL + 'admin/student/all')
-      .pipe(map((s) => s.data));
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/student/all').pipe(map((s) => s.data));
+  }
+
+  getAllCoordinator() {
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/coordinator/all').pipe(map((s) => s.data));
   }
 
   editFaculty(faculty: {}) {
     return this.http.put(this.baseURL + 'admin/faculty/edit', faculty);
   }
 
+  editRoles(username: any, roles: any) {
+    return this.http.put<any>(this.baseURL + 
+      'admin/faculty/edit-roles/' + username + '?roles=' + roles, {});
+  }
 
 }

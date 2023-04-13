@@ -137,7 +137,7 @@ namespace API.Controllers
            
             return Ok();
         }
-
+        
         [HttpPut("faculty/edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, 
             [FromQuery]string roles)
@@ -146,7 +146,7 @@ namespace API.Controllers
 
             var selectedRoles = roles.Split(",").ToArray();
 
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByEmailAsync(username);
             if(user == null) return NotFound();
 
             var userRoles = await _userManager.GetRolesAsync(user);

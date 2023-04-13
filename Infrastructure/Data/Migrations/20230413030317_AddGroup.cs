@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class AddGroup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -258,7 +258,6 @@ namespace Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Group = table.Column<string>(type: "TEXT", nullable: true),
                     SchoolId = table.Column<Guid>(type: "TEXT", nullable: false),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -274,6 +273,31 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_Sections_Schools_SchoolId",
                         column: x => x.SchoolId,
                         principalTable: "Schools",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    GroupName = table.Column<string>(type: "TEXT", nullable: true),
+                    SectionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Groups_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Groups_Sections_SectionId",
+                        column: x => x.SectionId,
+                        principalTable: "Sections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -314,6 +338,16 @@ namespace Infrastructure.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Groups_AppUserId",
+                table: "Groups",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Groups_SectionId",
+                table: "Groups",
+                column: "SectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JustiFiles_AppUserId",
@@ -368,10 +402,10 @@ namespace Infrastructure.Data.Migrations
                 name: "Contents");
 
             migrationBuilder.DropTable(
-                name: "JustiFiles");
+                name: "Groups");
 
             migrationBuilder.DropTable(
-                name: "Sections");
+                name: "JustiFiles");
 
             migrationBuilder.DropTable(
                 name: "Teams");
@@ -381,6 +415,9 @@ namespace Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Sections");
 
             migrationBuilder.DropTable(
                 name: "Schools");

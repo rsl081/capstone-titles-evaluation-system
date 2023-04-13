@@ -36,7 +36,9 @@ namespace API.Controllers
         public async Task<ActionResult> GetSY()
         {
             return Ok(await _dataContext.Schools
-                            .Include(s => s.Sections)
+                            .Include(s => s.Sections.OrderBy(x => x.Name))
+                            .ThenInclude(g => g.Groups.OrderBy(x => x.GroupName))
+                            .OrderBy(s => s.SchoolYear)
                             .ToListAsync());
         }
 
@@ -46,7 +48,8 @@ namespace API.Controllers
         )
         {
             return Ok(await _dataContext.Schools
-                            .Include(s => s.Sections)
+                            .Include(s => s.Sections.OrderBy(x => x.Name))
+                            .ThenInclude(g => g.Groups.OrderBy(x => x.GroupName))
                             .Where(x => x.SchoolYear == schoolYear)
                             .ToListAsync());
         }

@@ -14,7 +14,9 @@ namespace API.Dtos
         public string DisplayName { get; set; }
         public bool IsApproved { get; set; }
         public string Expertise { get; set; }
-        public ICollection<string> Sections { get; set; }
+        public ICollection<Object> Sections { get; set; }
+        public ICollection<string> UserRoles { get; set; }
+        
         [JsonIgnore]
         public DateTime Created { get; set; }
         public string CreatedAt { 

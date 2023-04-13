@@ -29,7 +29,6 @@ export class SchoolTableComponent implements OnInit {
 
     this.addSectionForm = this._formBuilder.group({
       sectionName: ['', Validators.required],
-      sectionGroup: ['', Validators.required],
     });
 
     this.fetchSchoolYear();
@@ -42,26 +41,16 @@ export class SchoolTableComponent implements OnInit {
   setYear(sy: string) {
     this.year = sy;
 
-    // if (this._schoolService.getSpecificSchoolYear != null) {
-    //   this.activeSchool = [];
-    // }
-
     this._schoolService.getSpecificSchoolYear(this.year).subscribe({
       next: (school) => {
         school.map((s) => (this.yearId = s.id));
         
         this.activeSchool = school[0].sections;
 
-        // school.map((s) =>
-        //   s.sections.map((r) => {
-        //     // this.activeSchool = [];
-        //     this.activeSchool.push(r);
-        //   }),
-        // );
       },
       error: (error) => alert(error.message),
       complete: () => {
-        this.toggleDropDown();
+        // this.toggleDropDown();
       },
     });
 
@@ -96,7 +85,7 @@ export class SchoolTableComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmitYear() {
     const { schoolYear } = this.addYearForm.value;
 
     const sy = {
@@ -110,8 +99,8 @@ export class SchoolTableComponent implements OnInit {
 
     this._schoolService.addSchoolYear(sy).subscribe({
       complete: () => {
-        // window.location.reload();
-        this._schoolService.schoolUpdateNeeded.next(sy);
+        // this._schoolService.schoolUpdateNeeded.next(sy);
+        this.fetchSchoolYear();
         this.toggleYearDialog();
       },
     });
@@ -119,11 +108,10 @@ export class SchoolTableComponent implements OnInit {
   }
 
   onSubmitSection() {
-     const { sectionName, sectionGroup } = this.addSectionForm.value;
+     const { sectionName } = this.addSectionForm.value;
 
      const section = {
        name: sectionName,
-       group: sectionGroup,
        schoolId: this.yearId,
      };
     

@@ -34,7 +34,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetSections()
         {
-            return Ok(await _dataContext.Sections.ToListAsync());
+            return Ok(await _dataContext.Sections
+                .Include(g => g.Groups)
+                .ToListAsync());
         }
 
         [HttpDelete("{id}")]
@@ -68,12 +70,13 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPut("Assign/{id}")]
+        [HttpPut("assign/{id}")]
         public async Task<ActionResult<SectionAssignDto>> AssignSectionCoordinator(
             Guid id, 
             SectionAssignDto sectionCreateDto)
         {
-            var section = await _dataContext.Sections.FindAsync(id);
+            var section = await _dataContext
+                                    .Sections.FindAsync(id);
 
             if(section == null) return BadRequest();
 
@@ -84,11 +87,6 @@ namespace API.Controllers
 
             return Ok();
         }
-
-
-
-
-
 
     }
 }

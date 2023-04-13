@@ -37,6 +37,30 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Contents");
                 });
 
+            modelBuilder.Entity("Core.Entities.Group", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("GroupName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("SectionId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("SectionId");
+
+                    b.ToTable("Groups");
+                });
+
             modelBuilder.Entity("Core.Entities.Identity.AppRole", b =>
                 {
                     b.Property<string>("Id")
@@ -245,9 +269,6 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Group")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -369,6 +390,21 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.Group", b =>
+                {
+                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                        .WithMany("Groups")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Core.Entities.Section", "Section")
+                        .WithMany("Groups")
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Section");
+                });
+
             modelBuilder.Entity("Core.Entities.Identity.AppUserRole", b =>
                 {
                     b.HasOne("Core.Entities.Identity.AppRole", "Role")
@@ -480,6 +516,8 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
                 {
+                    b.Navigation("Groups");
+
                     b.Navigation("JustiFiles");
 
                     b.Navigation("Schools");
@@ -496,6 +534,11 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.School", b =>
                 {
                     b.Navigation("Sections");
+                });
+
+            modelBuilder.Entity("Core.Entities.Section", b =>
+                {
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }
