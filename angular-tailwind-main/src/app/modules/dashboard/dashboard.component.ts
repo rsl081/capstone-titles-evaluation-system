@@ -8,29 +8,26 @@ import { map } from 'rxjs';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-
   sumOfCoordinator: number = 0;
   sumOfAdviser: number = 0;
   sumOfPanel: number = 0;
   sumOfAdmin: number = 0;
-
+  palette = 'primary-900';
 
   constructor(private _accountService: AccountService) {}
 
   ngOnInit(): void {
+    this.palette = 'primary-900';
     this.totalCoordinator();
     this.totalAdviser();
     this.totalPanel();
     this.totalAdmin();
-    
+
     let user = localStorage.getItem('user');
     let obj = JSON.parse(user);
 
     console.log(obj.role + 'test');
-    
   }
-
-  
 
   totalCoordinator() {
     this._accountService.totalCoordinator().subscribe({
@@ -43,7 +40,7 @@ export class DashboardComponent implements OnInit {
       next: (response) => (this.sumOfAdviser = response),
     });
   }
-  
+
   totalPanel() {
     this._accountService.totalPanel().subscribe({
       next: (response) => (this.sumOfPanel = response),
@@ -55,6 +52,4 @@ export class DashboardComponent implements OnInit {
       next: (response) => (this.sumOfAdmin = response),
     });
   }
-
-
 }

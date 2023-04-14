@@ -65,7 +65,7 @@ module.exports = {
         custom: '0px 0px 50px 0px rgb(82 63 105 / 15%)',
       },
       colors: {
-        // primary: colors.green,
+        secondary: colors.green,
         primary: {
           50: '#f1dfe0',
           100: '#e2bdbe',

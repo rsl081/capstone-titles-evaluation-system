@@ -89,4 +89,9 @@ export class AccountService {
       'admin/faculty/edit-roles/' + username + '?roles=' + roles, {});
   }
 
+  resetPassword(body: {}) {
+    return this.http.post<any>(this.baseURL 
+        + 'account/resetpassword', body);
+  }
+
 }

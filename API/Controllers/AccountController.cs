@@ -249,5 +249,29 @@ namespace API.Controllers
             return Ok(totalItems);
         }
 
+
+        [HttpPost("resetpassword")]
+        public async Task<ActionResult<UserDto>> ResetPasswordUser(
+            UserResetDto userResetDto)
+        {   
+            
+            var user = await _userManager.FindByIdAsync(userResetDto.Id);
+
+            var confirmationToken = await _userManager
+                                            .GeneratePasswordResetTokenAsync(user);
+
+            var result = await _userManager.ResetPasswordAsync(user, 
+                confirmationToken, userResetDto.Password);
+            
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        
+
     }
 }

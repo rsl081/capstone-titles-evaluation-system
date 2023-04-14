@@ -29,4 +29,5 @@ export class SidebarComponent implements OnInit {
   toggleTheme() {
     this.themeService.theme = !this.themeService.isDark ? 'dark' : 'light';
   }
+  
 }
