@@ -22,4 +22,5 @@ export class ThemeService {
   public get isDark(): boolean {
     return this.theme == 'dark';
   }
+
 }

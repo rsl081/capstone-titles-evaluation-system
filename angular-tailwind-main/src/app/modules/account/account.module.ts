@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account/account.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,10 @@ import { AccountComponent } from './account/account.component';
   ],
   imports: [
     CommonModule,
-    AccountRoutingModule
+    AccountRoutingModule,
+    AngularSvgIconModule.forRoot(), 
+    FormsModule, 
+    ReactiveFormsModule
   ]
 })
 export class AccountModule { }
