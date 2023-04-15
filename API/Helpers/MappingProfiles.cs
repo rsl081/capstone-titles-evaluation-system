@@ -15,6 +15,7 @@ namespace API.Helpers
     {
         public MappingProfiles()
         {
+            CreateMap<Content, ContentPhotoCreateDto>();
             CreateMap<ContentCreateDto, Content>();
             CreateMap<SYCreateDto, School>();
             CreateMap<SectionCreateDto, Section>();
@@ -49,7 +50,7 @@ namespace API.Helpers
 
             CreateMap<FacultyUpdateDto, AppUser>();
             CreateMap<GroupCreateDto, Group>();
-            CreateMap<GroupAssignDto, Group>();
+            CreateMap<GroupAssignDto, Group>(); 
 
         }
     }

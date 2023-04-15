@@ -6,16 +6,90 @@
         </div>
     </div>
   <!-- end Header -->
+
+    <div class="mb-8 drop-shadow-2xl h-fit flex flex-col justify-center rounded-lg bg-white p-8 dark:bg-night-700">
+
+      <div class="flex-[4] flex flex-col gap-2 min-w-[400px]">
+                  <h3 class="dark:text-white text-2xl">Upload queue</h3>
+  
+                  <table class="table">
+                    <thead class="border-b border-gray-300">
+                      <tr>
+                        <th class="dark:text-white w-[70%] text-left">Image Name</th>
+                        <th class="dark:text-white text-left">Size</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of uploader.queue">
+                        <td>
+                          <strong>{{ item?.file?.name }}</strong>
+                        </td>
+                        <td *ngIf="uploader.options.isHTML5" nowrap class="text-left">
+                          {{ item?.file?.size / 1024 / 1024 | number: ".2" }} MB
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+  
+                  <div class="dark:text-white">
+                    Queue progress:
+                    <div class="w-full bg-gray-100 rounded-md h-4 progress">
+                      <div
+                        class="bg-[#18ce0f] rounded-md h-full"
+                        role="progressbar"
+                        [ngStyle]="{ width: uploader.progress + '%' }"
+                      ></div>
+                    </div>
+                  </div>
+  
+                  <div class="w-full mt-4 flex justify-end gap-4">
+
+                    <button
+                      (click)="uploadImage()"
+                      [disabled]="!uploader.queue.length"
+                      class="disabled:opacity-50 justify-center rounded-md border border-transparent bg-primary-500 py-2 px-4 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+                      Update Logo
+                    </button>
+
+                    <div class="file-input">
+                      <input
+                        type="file"
+                        ng2FileSelect
+                        [uploader]="uploader"
+                        class="file opacity-0 w-[0.1px] h-[0.1px] absolute"
+                        id="file"
+                      />
+                      <label
+                        for="file"
+                        class="min-w-[7rem] p-2 bg-[#888888] text-white rounded relative cursor-pointer flex justify-center items-center transition-transform duration-200 ease-out hover:opacity-90"
+                      >
+                        Select Image
+                      </label>
+                    </div>
+
+                    <!-- <button
+                      disabledBackgroundColor="#fecaca"
+                      enabledBackgroundColor="#dc2626"
+                      type="button"
+                      class="min-w-[7rem] bg-[#ff3636] text-white p-2 rounded hover:opacity-90"
+                      (click)="uploader.clearQueue()"
+                      [disabled]="!uploader.queue.length"
+                    >
+                      <i class="fa fa-trash"></i> Remove
+                    </button> -->
+                  </div>
+      </div>
+
+    </div>
   
   <div class="mb-8 drop-shadow-2xl h-fit flex flex-col justify-center rounded-lg bg-white p-8 dark:bg-night-700">
           
-          <form [formGroup]="form" >
-            <!-- <button
-              class="mt-2 w-32 h-32 rounded-full border border-transparent bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
-
-            </button> -->
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
             <div class="form__group mb-2">
+
+            
+              
               <div class="relative">
                 <input
                   type="text"
@@ -30,10 +104,9 @@
                   Bulacan State University
                 </label>
               </div>
-              <!-- <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
-                <div *ngIf="f['email'].errors['required']">Required field</div>
-                <div *ngIf="f['email'].errors['email']">Email must be an email address valid</div>
-              </div> -->
+              <div *ngIf="submitted && f['schoolName'].errors" class="is__invalid-error">
+                <div *ngIf="f['schoolName'].errors['required']">Required field</div>
+              </div>
             </div>
             <div class="form__group mb-2">
               <div class="relative">
@@ -51,10 +124,10 @@
                   Vision
                 </label>
               </div>
-              <!-- <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
-                <div *ngIf="f['email'].errors['required']">Required field</div>
-                <div *ngIf="f['email'].errors['email']">Email must be an email address valid</div>
-              </div> -->
+              <div *ngIf="submitted && f['vision'].errors" class="is__invalid-error">
+                <div *ngIf="f['vision'].errors['required']">Required field</div>
+                <div *ngIf="f['vision'].errors['vision']">Email must be an email address valid</div>
+              </div>
             </div>
             <div class="form__group mb-2">
               <div class="relative">
@@ -72,10 +145,9 @@
                   Mission
                 </label>
               </div>
-              <!-- <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
-                <div *ngIf="f['email'].errors['required']">Required field</div>
-                <div *ngIf="f['email'].errors['email']">Email must be an email address valid</div>
-              </div> -->
+              <div *ngIf="submitted && f['mission'].errors" class="is__invalid-error">
+                <div *ngIf="f['mission'].errors['required']">Required field</div>
+              </div>
             </div>
 
             <!-- Submit Button -->

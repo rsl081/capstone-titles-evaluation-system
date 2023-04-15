@@ -26,7 +26,13 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Mission")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PublicId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("SchoolName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Vision")
@@ -392,7 +398,7 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Group", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
                         .WithMany("Groups")
                         .HasForeignKey("AppUserId");
 
@@ -401,6 +407,8 @@ namespace Infrastructure.Data.Migrations
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Section");
                 });
