@@ -42,6 +42,7 @@ export class AccountService {
       localStorage.setItem('user', JSON.stringify(user));
     }
   }
+  
 
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
@@ -72,6 +73,12 @@ export class AccountService {
     return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all').pipe(map((f) => f.data));
   }
 
+  //get yung user
+  getCurrentUser(id:string) {
+    return this.http.get<IUserRoot>(this.baseURL + 'account/get-current-user/'+ id)
+      .pipe(map((f) => f));
+  }
+
   getAllStudent() {
     return this.http.get<IUserRoot>(this.baseURL + 'admin/student/all').pipe(map((s) => s.data));
   }
@@ -85,13 +92,12 @@ export class AccountService {
   }
 
   editRoles(username: any, roles: any) {
-    return this.http.put<any>(this.baseURL + 
-      'admin/faculty/edit-roles/' + username + '?roles=' + roles, {});
+    return this.http.put<any>(this.baseURL + 'admin/faculty/edit-roles/' + username + '?roles=' + roles, {});
   }
 
   resetPassword(body: {}) {
-    return this.http.post<any>(this.baseURL 
-        + 'account/resetpassword', body);
+    return this.http.post<any>(this.baseURL + 'account/resetpassword', body);
   }
+
 
 }

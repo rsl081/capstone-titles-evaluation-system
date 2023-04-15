@@ -40,12 +40,12 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("add-justification/{id}")]
+        [HttpPost("add-justification/{appUserId}")]
         public async Task<ActionResult<JustiCreateDto>> AddJustiFile(
-            IFormFile file, string id)
+            IFormFile file, string appUserId)
         {
             var appUser = await _userManager.Users.SingleOrDefaultAsync(
-                x => x.Id == id);
+                x => x.Id == appUserId);
 
             var result = await _fileService.AddFileAsync(file);
 
@@ -55,6 +55,7 @@ namespace API.Controllers
             {
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
+                FileName = result.PublicId,
                 AppUserId = appUser.Id,
             };
 
@@ -85,7 +86,7 @@ namespace API.Controllers
                 return BadRequest("Problem adding deleting the file");
             }
             
-            return Ok("Successfully Deleted");
+            return Ok();
         }
 
         [HttpPut("{id}")]
@@ -107,7 +108,7 @@ namespace API.Controllers
                 return BadRequest("Problem adding updating the file");
             }
 
-            return Ok("Successfully Updated");
+            return Ok();
         }
 
         [HttpPut("update-file/{id}")]
@@ -142,7 +143,7 @@ namespace API.Controllers
                 return BadRequest("Problem adding updating the url file");
             }
 
-            return Ok("Successfully Updated");
+            return Ok();
         }
 
 

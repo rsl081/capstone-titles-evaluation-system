@@ -9,7 +9,6 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: '', component: DashboardComponent, pathMatch: 'full' },
-      // { path: 'nfts', component: NftComponent },
       { path: '**', redirectTo: 'error/404' },
     ],
   },

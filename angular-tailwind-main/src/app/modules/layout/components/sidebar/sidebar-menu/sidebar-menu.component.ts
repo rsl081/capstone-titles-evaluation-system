@@ -12,6 +12,7 @@ import { MenuService } from '../../../services/menu.service';
 export class SidebarMenuComponent implements OnInit {
   public pagesMenu$: Observable<MenuItem[]> = new Observable<MenuItem[]>();
   public showSideBar$: Observable<boolean> = new Observable<boolean>();
+  userRole: any;
 
   constructor(private menuService: MenuService) {
     this.showSideBar$ = this.menuService.showSideBar$;
@@ -22,5 +23,12 @@ export class SidebarMenuComponent implements OnInit {
     this.menuService.toggleMenu(subMenu);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    let user = localStorage.getItem('user');
+    let obj = JSON.parse(user);
+    this.userRole = obj.role;
+    // console.log(obj.role + 'test');
+
+  }
 }

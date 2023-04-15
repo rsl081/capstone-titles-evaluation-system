@@ -20,6 +20,9 @@ import { FacultyTableItemComponent } from './components/faculty-table-item/facul
 import { SchoolTableComponent } from './components/school-table/school-table.component';
 import { SchoolTableItemComponent } from './components/school-table-item/school-table-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StudentJustiTableComponent } from './student/student-justi-table/student-justi-table.component';
+import { StudentJustiTableItemComponent } from './student/student-justi-table-item/student-justi-table-item.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FacultyTableItemComponent,
     SchoolTableComponent,
     SchoolTableItemComponent,
+    StudentJustiTableComponent,
+    StudentJustiTableItemComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +50,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularSvgIconModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    FileUploadModule,
   ],
 })
 export class DashboardModule {}

@@ -90,8 +90,10 @@ try {
     //Seed User
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+    var dataContext = services.GetRequiredService<DataContext>();
 
     await AppIdentityDbContextSeed.SeedUsersAsync(userManager, roleManager);
+    await DataContextSeed.SeedDataAsync(dataContext);
 
 }catch(Exception ex) {
     var logger = loggerFactory.CreateLogger<Program>();

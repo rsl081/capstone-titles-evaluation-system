@@ -60,7 +60,6 @@ export class ContentComponent implements OnInit {
 
     this._content.editContent(this.contentId, content).subscribe({
       complete: () => {
-        
         alert('Successfully Updated');
         this.form.reset();
         this.submitted = false;
@@ -93,7 +92,7 @@ export class ContentComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file: FileItem) => {
       file.withCredentials = false;
     };
-    
+
     this.uploader.onSuccessItem = (item, response) => {
       alert('Successfully Updated');
       console.log(response);

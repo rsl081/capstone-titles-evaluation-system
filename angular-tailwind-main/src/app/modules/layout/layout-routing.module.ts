@@ -23,6 +23,11 @@ const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () => import('../account/account.module').then((m) => m.AccountModule),
   },
+  {
+    path: 'about',
+    component: LayoutComponent,
+    loadChildren: () => import('../about/about.module').then((m) => m.AboutModule),
+  },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'error/404' },
 ];
