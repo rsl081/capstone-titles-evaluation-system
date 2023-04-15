@@ -37,6 +37,7 @@ export class AccountComponent implements OnInit {
   get f() {
     return this.form.controls;
   }
+  
   onSubmit() {
     this.submitted = true;
     const { resetPassword } = this.form.value;

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Data.Migrations
 {
-    public partial class AddGroup : Migration
+    public partial class ChangeContentAttr : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,6 +57,8 @@ namespace Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Url = table.Column<string>(type: "TEXT", nullable: true),
+                    PublicId = table.Column<string>(type: "TEXT", nullable: true),
                     SchoolName = table.Column<string>(type: "TEXT", nullable: true),
                     Vision = table.Column<string>(type: "TEXT", nullable: true),
                     Mission = table.Column<string>(type: "TEXT", nullable: true)
