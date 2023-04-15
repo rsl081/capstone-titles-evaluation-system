@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
+using Core.Entities;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +22,6 @@ namespace API.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _config;
-
-
         public AccountController(DataContext dataContext, 
         UserManager<AppUser> userManager, 
             SignInManager<AppUser> signInManager,
@@ -40,6 +41,8 @@ namespace API.Controllers
         {
             
             var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(j => j.JustiFiles)
                 .SingleOrDefaultAsync(x => x.Email == loginDto.Email);
             
             if(user == null) return Unauthorized();
@@ -59,11 +62,40 @@ namespace API.Controllers
             return new UserDto
             {
                 Id = user.Id,
-                // PhotoUrl = user.UserPhoto.Url,
+                UserPhoto = user.UserPhoto.Url,
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 DisplayName = user.DisplayName,  
                 Created = user.Created,
+                JustiFiles = user.JustiFiles,
+            };
+
+        }
+
+        // [Authorize]
+        [HttpGet("get-current-user/{id}")]
+        public async Task<ActionResult<UserDto>> GetCurrentUser(string id)
+        {
+            var appUser = await _userManager.Users.FirstOrDefaultAsync(
+                x => x.Id == id
+            );
+
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(j => j.JustiFiles)
+                .Include(t => t.Teams)
+                .SingleOrDefaultAsync(x => x.Email == appUser.Email);
+
+            return new UserDto
+            {
+                Id = user.Id,
+                UserPhoto = user.UserPhoto.Url,
+                Email = user.Email,
+                Token = await _tokenService.CreateToken(user),
+                DisplayName = user.DisplayName,
+                Created = user.Created,
+                JustiFiles = user.JustiFiles,
+                Teams = user.Teams
             };
 
         }
@@ -270,6 +302,9 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
+        
+        
 
         
 

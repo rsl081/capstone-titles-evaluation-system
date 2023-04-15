@@ -38,11 +38,45 @@
         Assign The Coordinator?
       </h2>
 
-      <!-- DropDown for section -->
+      <!-- DropDown for Year -->
       <div class="mb-4">
           <div>
               <button 
-                  (click)="toggleDropDown(); "
+                  (click)="toggleYearDropDown(); "
+                  type="button" class="dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+              {{ getYear() }}
+              <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+              </button>
+          </div>
+          <div 
+              *ngIf="isOpenYearDropDown"
+              class="absolute right-16 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+              <div class="py-1" role="none">
+           
+              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                  <button 
+                      *ngFor="let year of allYear"
+                      (click)="
+                        setYear(year.schoolYear);
+                        setYearId(year.id); 
+                        toggleYearDropDown();"
+                      class="text-gray-700 block px-4 py-2 text-sm" 
+                      role="menuitem" 
+                      tabindex="-1" 
+                      id="menu-item-0">{{year.schoolYear}}</button>
+                    
+              </div>
+          </div>
+        
+      </div>
+
+      <!-- DropDown for Section -->
+      <div class="mb-4">
+          <div>
+              <button 
+                  (click)="toggleSectionDropDown(); "
                   type="button" class="dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
               {{ getSection() }}
               <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -51,16 +85,17 @@
               </button>
           </div>
           <div 
-              *ngIf="isOpenDropDown"
+              *ngIf="isOpenSectionDropDown"
               class="absolute right-16 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
               <div class="py-1" role="none">
+           
               <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                   <button 
                       *ngFor="let section of allSection"
                       (click)="
                         setSection(section.name);
                         setSectionId(section.id); 
-                        toggleDropDown();"
+                        toggleSectionDropDown();"
                       class="text-gray-700 block px-4 py-2 text-sm" 
                       role="menuitem" 
                       tabindex="-1" 
@@ -68,9 +103,13 @@
                     
               </div>
           </div>
+        
       </div>
 
-      <div class="flex w-full gap-3">
+    
+
+      <!-- Submit form -->
+      <div class="mt-4 flex w-full gap-3">
         <button
           (click)="onSubmit()"
           class="flex-1 max-w-xs rounded-full relative overflow-hidden inline-flex group items-center justify-center bg-primary-500 text-white px-10 py-2"
@@ -90,6 +129,7 @@
           <span class="relative">Cancel</span>
         </button>
       </div>
+
     </div>
   </form>
 

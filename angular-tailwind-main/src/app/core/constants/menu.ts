@@ -50,6 +50,11 @@ export class Menu {
           label: 'Content',
           route: '/content',
         },
+        {
+          icon: 'assets/icons/outline/information-circle.svg',
+          label: 'About BulSU',
+          route: '/about',
+        },
       ],
     },
     // {

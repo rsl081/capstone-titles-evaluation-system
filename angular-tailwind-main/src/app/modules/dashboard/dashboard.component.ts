@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   sumOfPanel: number = 0;
   sumOfAdmin: number = 0;
   palette = 'primary-900';
+  userRole: any;
 
   constructor(private _accountService: AccountService) {}
 
@@ -25,8 +26,9 @@ export class DashboardComponent implements OnInit {
 
     let user = localStorage.getItem('user');
     let obj = JSON.parse(user);
+    this.userRole = obj.role;
 
-    console.log(obj.role + 'test');
+   
   }
 
   totalCoordinator() {
