@@ -18,7 +18,7 @@ export class StudentAccountComponent implements OnInit {
   uploader: FileUploader;
   baseURL = environment.apiUrl;
 
-  constructor(private _accountSerivce: AccountService) {}
+  constructor(private _accountService: AccountService) {}
 
   ngOnInit(): void {
     this.getAppUser();
@@ -30,7 +30,7 @@ export class StudentAccountComponent implements OnInit {
     let user = localStorage.getItem('user');
     let obj = JSON.parse(user);
 
-    this._accountSerivce.getCurrentUser(obj.id).subscribe({
+    this._accountService.getCurrentUser(obj.id).subscribe({
       next: (c:any) => {
 
         this.appUserId = c.id
