@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FileItem, FileUploader } from 'ng2-file-upload';
-import { take } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
-import { IUser } from 'src/app/shared/models/user';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: '[student-justi-table]',
-  templateUrl: './student-justi-table.component.html',
-  styleUrls: ['./student-justi-table.component.scss'],
+  selector: '[hearing-table]',
+  templateUrl: './hearing-table.component.html',
+  styleUrls: ['./hearing-table.component.scss'],
 })
-export class StudentJustiTableComponent implements OnInit {
+export class HearingTableComponent implements OnInit {
+
   public activeStudent: any;
   uploader: FileUploader;
   baseURL = environment.apiUrl;
@@ -19,29 +18,27 @@ export class StudentJustiTableComponent implements OnInit {
   constructor(private _accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.fetchCurrentJustiFile();
+    this.fetchCurrentHearingFile();
     this._accountService.userUpdateNeeded.subscribe(() => {
-      this.fetchCurrentJustiFile();
+      this.fetchCurrentHearingFile();
     });
 
     this.initializeUploader();
   }
 
-  fetchCurrentJustiFile() {
+  fetchCurrentHearingFile() {
     let user = localStorage.getItem('user');
     let obj = JSON.parse(user);
     this._accountService.getCurrentUser(obj.id).subscribe({
       next: (r: any) => {
-        // this.activeStudent = r.justiFiles.map(r => r);
-        this.activeStudent = r.justiFiles.map((r) => r);
+        
+        this.activeStudent = r.hearingFiles.map((r) => r);
         this.userId = r.id;
       },
       error: (e) => {
         console.log(e);
       },
     });
-
-    // this.activeStudent = obj.justiFiles.map((r) => r);
   }
 
   uploadImage() {
@@ -51,7 +48,7 @@ export class StudentJustiTableComponent implements OnInit {
   uploadProfilePhoto(id: any) {
     if (this.uploader.queue.length) {
       this.uploader.setOptions({
-        url: this.baseURL + 'justification/add-justification/' + id,
+        url: this.baseURL + 'hearing/add-hearing/' + id,
       });
       this.uploader.uploadAll();
     }
@@ -59,7 +56,7 @@ export class StudentJustiTableComponent implements OnInit {
 
   initializeUploader() {
     this.uploader = new FileUploader({
-      url: this.baseURL + 'justification/add-justification',
+      url: this.baseURL + 'hearing/add-hearing',
       isHTML5: true,
       allowedFileType: ['pdf', 'docx'],
       removeAfterUpload: true,

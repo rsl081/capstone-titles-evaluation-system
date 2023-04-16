@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
-using Core.Entities;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,19 +15,24 @@ namespace API.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _config;
+        private readonly IPhotoService _photoService;
         public AccountController(DataContext dataContext, 
         UserManager<AppUser> userManager, 
             SignInManager<AppUser> signInManager,
             ITokenService tokenService,
             IMapper mapper,
-            IConfiguration config
+            IConfiguration config,
+            IPhotoService photoService
             ) : base (mapper)
         {
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._tokenService = tokenService;
             this._config = config;
+            this._photoService = photoService;
         }
+
+
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> LoginUser(LoginDto loginDto)
@@ -83,6 +81,7 @@ namespace API.Controllers
             var user = await _userManager.Users
                 .Include(p => p.UserPhoto)
                 .Include(j => j.JustiFiles)
+                .Include(h => h.HearingFiles)
                 .Include(t => t.Teams)
                 .SingleOrDefaultAsync(x => x.Email == appUser.Email);
 
@@ -95,7 +94,8 @@ namespace API.Controllers
                 DisplayName = user.DisplayName,
                 Created = user.Created,
                 JustiFiles = user.JustiFiles,
-                Teams = user.Teams
+                Teams = user.Teams,
+                HearingFiles = user.HearingFiles
             };
 
         }
@@ -303,7 +303,40 @@ namespace API.Controllers
             return BadRequest();
         }
 
-        
+        //The var name file must match the input name in the client
+        // for example input='file'
+        [HttpPost("add-photo/{id}")]
+        public async Task<ActionResult> AddPhoto(
+            IFormFile file, string id)
+        {
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .SingleOrDefaultAsync(
+                x => x.Id == id);
+
+            var result = await _photoService.AddPhotoAsync(file);
+
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+            var userPhoto = new UserPhoto {
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+
+            user.UserPhoto = userPhoto;
+            
+            var saveResult = await _userManager.UpdateAsync(user);
+
+            if (!saveResult.Succeeded)
+            {
+                return BadRequest("Problem adding photo");
+            }
+
+            return Ok(_mapper.Map<ContentPhotoCreateDto>(user.UserPhoto));
+        }
+
+
+
         
 
         

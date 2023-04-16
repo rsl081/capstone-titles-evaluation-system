@@ -20,6 +20,7 @@ namespace Core.Entities.Identity
         // Student
         public List<Team> Teams { get; set; } = new List<Team>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();
+        public List<HearingFile> HearingFiles { get; set; } = new List<HearingFile>();
         public ICollection<AppUserRole> UserRoles { get; set; }
     }
 }

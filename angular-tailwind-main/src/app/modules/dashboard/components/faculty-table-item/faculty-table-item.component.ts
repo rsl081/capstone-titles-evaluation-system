@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class FacultyTableItemComponent implements OnInit {
   approvedForm!: FormGroup;
-  @Input() faculty = <IUser>{};
+  @Input() faculty = <any>{};
   isOpen = false;
 
   constructor(private _accountService: AccountService, private readonly _formBuilder: FormBuilder) {}
