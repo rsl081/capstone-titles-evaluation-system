@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MenuItem } from 'src/app/core/models/menu.model';
 import { MenuService } from '../../../services/menu.service';
+import { AccountService } from 'src/app/core/services/account.service';
 
 @Component({
   selector: 'app-navbar-menu',
@@ -14,11 +15,31 @@ export class NavbarMenuComponent implements OnInit {
   private showMenuClass = ['scale-100', 'animate-fade-in-up', 'opacity-100', 'pointer-events-auto'];
   private hideMenuClass = ['scale-95', 'animate-fade-out-down', 'opacity-0', 'pointer-events-none'];
 
-  constructor(private menuService: MenuService) {
+  name: any;
+
+  constructor(private accountService: AccountService, private menuService: MenuService) {
     this.pagesMenu$ = this.menuService.pagesMenu$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAppUser();
+    this.accountService.userUpdateNeeded.subscribe(() =>{
+      this.getAppUser();
+    })
+  }
+
+  getAppUser(): void {
+    let user = localStorage.getItem('user');
+    let obj = JSON.parse(user);
+
+    this.accountService.getCurrentUser(obj.id).subscribe({
+      next: (c: any) => {
+        this.name = c.displayName;
+        // this.appUserId = c.map((r) => r.id);
+      },
+      error: (error) => console.log(error),
+    });
+  }
 
   public toggleMenu(menu: MenuItem): void {
     menu.selected = !menu.selected;
