@@ -23,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StudentJustiTableComponent } from './student/student-justi-table/student-justi-table.component';
 import { StudentJustiTableItemComponent } from './student/student-justi-table-item/student-justi-table-item.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { HearingTableComponent } from './student/hearing-table/hearing-table.component';
+import { HearingTableItemComponent } from './student/hearing-table-item/hearing-table-item.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     SchoolTableItemComponent,
     StudentJustiTableComponent,
     StudentJustiTableItemComponent,
+    HearingTableComponent,
+    HearingTableItemComponent,
   ],
   imports: [
     CommonModule,

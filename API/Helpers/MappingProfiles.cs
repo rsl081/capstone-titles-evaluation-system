@@ -24,15 +24,14 @@ namespace API.Helpers
             CreateMap<JustiCreateDto, JustiFile>().ReverseMap();
             CreateMap<JustiUpdateDto, JustiFile>();
             CreateMap<RawUploadResult , JustiFile>();
-
+            
+            CreateMap<UserPhoto, ContentPhotoCreateDto>();
             CreateMap<AppUser, FacultyToReturn>()
-                .ForMember(p => p.UserPhoto, o => o.MapFrom<FacultyUrlResolver>())
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
                 .ForMember(p => p.UserRoles, o => 
                     o.MapFrom(s => s.UserRoles.Select(user => user.Role)));
 
             CreateMap<AppUser, CoordinatorToReturn>()
-                .ForMember(p => p.UserPhoto, o => o.MapFrom<CoordinatorUrlResolver>())
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
                 .ForMember(p => p.Sections, o => 
                     o.MapFrom(s => s.Sections.Select(s => s)))
@@ -40,7 +39,6 @@ namespace API.Helpers
                     o.MapFrom(s => s.UserRoles.Select(user => user.Role)));
 
             CreateMap<AppUser, StudentToReturnDto>()
-                .ForMember(p => p.UserPhoto, o => o.MapFrom<StudUrlResolver>())
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
                 .ForMember(p => p.Sections, o => 
                     o.MapFrom(s => s.Sections.Select(s => s)))
@@ -52,6 +50,8 @@ namespace API.Helpers
             CreateMap<GroupCreateDto, Group>();
             CreateMap<GroupAssignDto, Group>(); 
 
+            CreateMap<JustiCreateDto, HearingFile>().ReverseMap();
+            CreateMap<JustiUpdateDto, HearingFile>();
         }
     }
 }

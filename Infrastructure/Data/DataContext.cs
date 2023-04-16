@@ -12,6 +12,7 @@ namespace Infrastructure.Data
         IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public DbSet<JustiFile> JustiFiles { get; set; }
+        public DbSet<HearingFile> HearingFiles { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<Section> Sections { get; set; }

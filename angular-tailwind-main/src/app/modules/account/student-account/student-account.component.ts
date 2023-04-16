@@ -1,46 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileItem, FileUploader } from 'ng2-file-upload';
-import { ContentService } from 'src/app/core/services/content.service';
+import { AccountService } from 'src/app/core/services/account.service';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss'],
+  selector: 'app-student-account',
+  templateUrl: './student-account.component.html',
+  styleUrls: ['./student-account.component.scss'],
 })
-export class ContentComponent implements OnInit {
+export class StudentAccountComponent implements OnInit {
+
+  //!===================================================
   form: FormGroup;
   submitted = false;
-  contentId: any;
+  appUserId: any;
   uploader: FileUploader;
   baseURL = environment.apiUrl;
 
-  constructor(private _content: ContentService, private _formBuilder: FormBuilder) {}
+  constructor(private _accountSerivce: AccountService) {}
 
   ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      schoolName: ['', [Validators.required]],
-      vision: ['', [Validators.required]],
-      mission: ['', [Validators.required]],
-    });
-
-    this.getContent();
+    this.getAppUser();
     this.initializeUploader();
   }
 
-  getContent(): void {
-    this._content.getContent().subscribe({
-      next: (c) => {
-        this.contentId = c.map((r) => r.id);
-      },
-      error: (error) => alert(error.message),
-    });
-  }
+  getAppUser(): void {
 
-  get f() {
-    return this.form.controls;
+    let user = localStorage.getItem('user');
+    let obj = JSON.parse(user);
+
+    this._accountSerivce.getCurrentUser(obj.id).subscribe({
+      next: (c:any) => {
+
+        this.appUserId = c.id
+        // this.appUserId = c.map((r) => r.id);
+      },
+      error: (error) => console.log(error),
+    });
+
   }
 
   onSubmit() {
@@ -58,23 +56,24 @@ export class ContentComponent implements OnInit {
       return;
     }
 
-    this._content.editContent(this.contentId, content).subscribe({
-      complete: () => {
-        alert('Successfully Updated');
-        this.form.reset();
-        this.submitted = false;
-      },
-    });
+    // this._content.editContent(this.contentId, content).subscribe({
+    //   complete: () => {
+    //     alert('Successfully Updated');
+    //     this.form.reset();
+    //     this.submitted = false;
+    //   },
+    // });
   }
 
   uploadImage() {
-    this.uploadProfilePhoto(this.contentId);
+    console.log(this.appUserId)
+    this.uploadProfilePhoto('0492a46e-ff70-48cc-98c7-263e25ec7835');
   }
 
   uploadProfilePhoto(id: any) {
     if (this.uploader.queue.length) {
       this.uploader.setOptions({
-        url: this.baseURL + 'contents/add-photo/' + id,
+        url: this.baseURL + 'account/add-photo/' + id,
       });
       this.uploader.uploadAll();
     }
@@ -82,7 +81,7 @@ export class ContentComponent implements OnInit {
 
   initializeUploader() {
     this.uploader = new FileUploader({
-      url: this.baseURL + 'contents/add-photo',
+      url: this.baseURL + 'account/add-photo',
       isHTML5: true,
       allowedFileType: ['image'],
       removeAfterUpload: true,
@@ -100,9 +99,9 @@ export class ContentComponent implements OnInit {
 
     this.uploader.onErrorItem = (item) => {
       if (!item.isSuccess) {
+        console.log('error dudot putaniubta!' + item.onError)
         // this.toaster.error('Upload failed');
       }
     };
   }
-  
 }

@@ -17,6 +17,7 @@ namespace API.Dtos
         public string Token { get; set; }
         public List<Team> Teams { get; set; } = new List<Team>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();
+        public List<HearingFile> HearingFiles { get; set; } = new List<HearingFile>();
         
         [JsonIgnore]
         public DateTime Created { get; set; }

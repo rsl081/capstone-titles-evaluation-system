@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230414053639_ChangeContentAttr")]
-    partial class ChangeContentAttr
+    [Migration("20230415161145_AddHearingFile")]
+    partial class AddHearingFile
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,6 +67,46 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("SectionId");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("Core.Entities.HearingFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Grade")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("HearingFiles");
                 });
 
             modelBuilder.Entity("Core.Entities.Identity.AppRole", b =>
@@ -415,6 +455,15 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Section");
                 });
 
+            modelBuilder.Entity("Core.Entities.HearingFile", b =>
+                {
+                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
+                        .WithMany("HearingFiles")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Core.Entities.Identity.AppUserRole", b =>
                 {
                     b.HasOne("Core.Entities.Identity.AppRole", "Role")
@@ -527,6 +576,8 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
                 {
                     b.Navigation("Groups");
+
+                    b.Navigation("HearingFiles");
 
                     b.Navigation("JustiFiles");
 
