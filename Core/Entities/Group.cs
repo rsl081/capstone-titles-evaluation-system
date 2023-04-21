@@ -16,5 +16,6 @@ namespace Core.Entities
         [JsonIgnore]
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
+        public List<Team> Teams { get; set; } = new List<Team>();
     }
 }

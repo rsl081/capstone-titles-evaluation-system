@@ -17,6 +17,5 @@ namespace Core.Entities
         [JsonIgnore]
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
-        // public Guid SchoolId { get; set; }
     }
 }

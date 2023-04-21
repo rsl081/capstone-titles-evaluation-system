@@ -63,7 +63,7 @@ namespace API.Controllers
             return Ok();
         }
         //-------------------
-        [HttpPut("Assign/{id}")]
+        [HttpPut("assign/{id}")]
         public async Task<ActionResult<GroupAssignDto>> AssignGroupAdviserOrPanel(
             Guid id, 
             GroupAssignDto groupAssignDto)

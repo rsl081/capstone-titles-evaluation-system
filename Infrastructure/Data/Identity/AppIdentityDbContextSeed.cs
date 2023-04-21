@@ -67,17 +67,6 @@ namespace Infrastructure.Data.Identity
                         UserName = "student@test.com",
                         UserPhoto = new UserPhoto("https://res.cloudinary.com/dsb2zudcg/image/upload/v1681628977/Sub_abqbux.png"),
                         EmailConfirmed = true,
-                        Teams = new List<Team> {
-                            new Team {
-                                Name = "Marc"
-                            },
-                            new Team {
-                                Name = "Roy"
-                            },
-                            new Team {
-                                Name = "Renzo"
-                            }
-                        }
                     }
                 };
 

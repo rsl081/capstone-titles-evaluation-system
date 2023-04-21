@@ -11,7 +11,6 @@ import { environment } from 'src/environments/environment';
 })
 export class StudentAccountComponent implements OnInit {
 
-  //!===================================================
   form: FormGroup;
   submitted = false;
   appUserId: any;
@@ -32,9 +31,7 @@ export class StudentAccountComponent implements OnInit {
 
     this._accountService.getCurrentUser(obj.id).subscribe({
       next: (c:any) => {
-
         this.appUserId = c.id
-        // this.appUserId = c.map((r) => r.id);
       },
       error: (error) => console.log(error),
     });

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileItem, FileUploader } from 'ng2-file-upload';
 import { AccountService } from 'src/app/core/services/account.service';
 import { SchoolService } from 'src/app/core/services/school.service';
+import { IUser } from 'src/app/shared/models/user';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,122 +12,161 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./team-table.component.scss'],
 })
 export class TeamTableComponent implements OnInit {
-  
-  isOpenYearDialog = false;
-  isOpenSectionDialog = false;
+  isOpen = false;
 
-  addYearForm: FormGroup;
-  addSectionForm: FormGroup;
+  isOpenGroupDropDown = false;
+  isOpenSectionDropDown = false;
+  allSection: any;
+  allGroup: any;
+  titleGroupDropDown = 'Group';
+  titleSectionDropDown = 'Section';
+  sectionId: any;
+  groupId: any;
+  studentId: any;
 
-  public activeSchool: any[] = [];
-  public activeSY = [];
-  isDropDownOpen = false;
-  year: string;
-  yearId: string;
+  public activeStudent: any[] = [];
 
-  constructor(private _formBuilder: FormBuilder, 
-    private _schoolService: SchoolService) {}
+  form: FormGroup;
+
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _schoolService: SchoolService, 
+    private _accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.addYearForm = this._formBuilder.group({
-      schoolYear: ['', Validators.required],
+    this.fetchAppUser();
+    this._accountService.userUpdateNeeded.subscribe(() => {
+      this.fetchAppUser();
     });
+    this.fetchAllSection();
 
-    this.addSectionForm = this._formBuilder.group({
-      sectionName: ['', Validators.required],
-    });
-
-    this.fetchSchoolYear();
-    this._schoolService.schoolUpdateNeeded.subscribe(() => {
-      this.setYear(this.year);
+    this.form = this._formBuilder.group({
+      team: [
+        '',
+        [
+          Validators.required,
+        ],
+      ],
     });
   }
 
-  setYear(sy: string) {
-    this.year = sy;
-
-    this._schoolService.getSpecificSchoolYear(this.year).subscribe({
-      next: (school) => {
-        school.map((s) => (this.yearId = s.id));
-
-        this.activeSchool = school[0].sections;
-      },
-      error: (error) => alert(error.message),
-      complete: () => {
-        // this.toggleDropDown();
+  fetchAllSection() {
+    this._schoolService.getSection().subscribe({
+      next: (section) => {
+        this.allSection = section;
       },
     });
   }
 
-  toggleDropDown() {
-    this.isDropDownOpen = !this.isDropDownOpen;
-  }
+  fetchAppUser() {
+    let user = localStorage.getItem('user');
+    let obj = JSON.parse(user);
 
-  toggleYearDialog() {
-    this.isOpenYearDialog = !this.isOpenYearDialog;
-  }
-
-  toggleSectionDialog() {
-    this.isOpenSectionDialog = !this.isOpenSectionDialog;
-  }
-
-  fetchSchoolYear(): void {
-    this._schoolService.getSchoolYear().subscribe({
-      next: (school) => {
-        this.year = school[0].schoolYear;
-        this.activeSY = school;
-        this.yearId = school[0].id;
-
-        this.activeSchool = school[0].sections;
-
-        // school[0].sections.map((r) => {
-        //   console.log(this.activeSchool);
-        // });
+    this._accountService.getCurrentUser(obj.id).subscribe({
+      next: (student: any) => {
+        this.activeStudent = student.teams.map((t) => t);
+        this.studentId = student.id;
       },
-      error: (error) => alert(error.message),
+      error: (error) => console.log(error),
     });
   }
 
-  onSubmitYear() {
-    const { schoolYear } = this.addYearForm.value;
+  toggleEditButton() {
+    this.isOpen = !this.isOpen;
+  }
 
-    const sy = {
-      schoolYear: schoolYear,
+  //* Group
+  toggleGroupDropDown() {
+    this.isOpenGroupDropDown = !this.isOpenGroupDropDown;
+  }
+
+  setGroup(section: any) {
+    this.titleGroupDropDown = section;
+  }
+
+  setGroupId(id: any) {
+    this.groupId = id;
+  }
+
+  getGroupId() {
+    return this.groupId;
+  }
+
+  getGroup() {
+    return this.titleGroupDropDown;
+  }
+
+  //* Section
+  toggleSectionDropDown() {
+    this.isOpenSectionDropDown = !this.isOpenSectionDropDown;
+  }
+
+  clickSectionButton() {
+    this.fetchGroup();
+    this.toggleSectionDropDown();
+  }
+
+  fetchGroup() {
+    console.log(this.getSection());
+    this._schoolService.getSpecificSection(this.getSection()).subscribe({
+      next: (section) => {
+        // console.log('sectn' + section);
+        this.allGroup = section[0].groups;
+      },
+    });
+  }
+
+  setSection(section: any) {
+    this.titleSectionDropDown = section;
+  }
+
+  setSectionId(id: any) {
+    this.sectionId = id;
+  }
+  getSectionId() {
+    return this.sectionId;
+  }
+
+  getSection() {
+    return this.titleSectionDropDown;
+  }
+
+  onSubmit() {
+    
+    const { team } = this.form.value;
+    let id = ''
+    let myTeam = {
+      name: team,
+      groupId: this.getGroupId(),
     };
 
-    // stop here if form is invalid
-    if (this.addYearForm.invalid) {
-      return;
-    }
-
-    this._schoolService.addSchoolYear(sy).subscribe({
-      complete: () => {
-        // this._schoolService.schoolUpdateNeeded.next(sy);
-        this.fetchSchoolYear();
-        this.toggleYearDialog();
+    this._schoolService.addTeam(myTeam).subscribe({
+      next:(e) => {
+        console.log('e ' + e);
+        id = e
       },
-    });
+      complete: () => {
+        alert('Successfully Added!')
+        let student = {
+          appUserId: this.studentId,
+        };
+
+        this._schoolService.assignTeam(id, student)
+        .subscribe({
+          complete: () => {
+            this._accountService.userUpdateNeeded.next(this);
+            this.toggleEditButton();
+          },
+          error: (e) => {
+            console.log(e)
+          },
+        });
+      },
+      error: (e) => {
+        console.log(e)
+      }
+    })
+
   }
 
-  onSubmitSection() {
-    const { sectionName } = this.addSectionForm.value;
-
-    const section = {
-      name: sectionName,
-      schoolId: this.yearId,
-    };
-
-    // stop here if form is invalid
-    if (this.addSectionForm.invalid) {
-      return;
-    }
-
-    this._schoolService.addSection(section).subscribe({
-      complete: () => {
-        // window.location.reload();
-        this._schoolService.schoolUpdateNeeded.next(section);
-        this.toggleSectionDialog();
-      },
-    });
-  }
 }

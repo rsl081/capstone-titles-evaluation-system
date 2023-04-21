@@ -36,6 +36,7 @@ namespace API.Controllers
         {
             return Ok(await _dataContext.Sections
                 .Include(g => g.Groups)
+                .ThenInclude(t => t.Teams)
                 .ToListAsync());
         }
 
@@ -86,6 +87,18 @@ namespace API.Controllers
             await _dataContext.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpGet("{sectionName}")]
+        public async Task<ActionResult> GetSpecificSection(
+            string sectionName
+        )
+        {
+            return Ok(await _dataContext.Sections
+                            .Include(g => g.Groups.OrderBy(x => x.GroupName))
+                            .ThenInclude(s => s.Teams.OrderBy(x => x.Name))
+                            .Where(x => x.Name.ToLower() == sectionName.ToLower())
+                            .ToListAsync());
         }
 
     }
