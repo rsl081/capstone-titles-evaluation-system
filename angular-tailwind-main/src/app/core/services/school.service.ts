@@ -36,13 +36,30 @@ export class SchoolService {
   getSection() {
     return this.http.get<any>(this.baseURL + 'section').pipe((s) => s);
   }
-  
+
   assignSection(id: any, coordinatorId: any) {
-    return this.http.put<any>(this.baseURL + 'section/assign/'+ id, coordinatorId)
-      .pipe((s) => s);
+    return this.http.put<any>(this.baseURL + 'section/assign/' + id, coordinatorId).pipe((s) => s);
+  }
+
+  getSpecificSection(sectionName: string) {
+    return this.http.get<any>(this.baseURL + 'section/' + sectionName).pipe((s) => s);
   }
 
   addGroup(gr: any) {
     return this.http.post<any>(this.baseURL + 'group', gr);
   }
+
+  addTeam(team: any) {
+    return this.http.post<any>(this.baseURL + 'teams', team);
+  }
+
+  assignTeam(id: any, student: any) {
+    return this.http.put<any>(this.baseURL + 'teams/assign/' + id, student).pipe((s) => s);
+  }
+
+
+  deleteTeam(id: any) {
+    return this.http.delete<any>(this.baseURL + 'teams/' + id).pipe((s) => s);
+  }
+  
 }

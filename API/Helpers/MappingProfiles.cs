@@ -52,6 +52,10 @@ namespace API.Helpers
 
             CreateMap<JustiCreateDto, HearingFile>().ReverseMap();
             CreateMap<JustiUpdateDto, HearingFile>();
+
+
+            CreateMap<TeamCreateDto, Team>();
+            CreateMap<TeamAssignDto, Team>(); 
         }
     }
 }

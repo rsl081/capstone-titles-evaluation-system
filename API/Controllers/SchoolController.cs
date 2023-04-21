@@ -50,7 +50,7 @@ namespace API.Controllers
             return Ok(await _dataContext.Schools
                             .Include(s => s.Sections.OrderBy(x => x.Name))
                             .ThenInclude(g => g.Groups.OrderBy(x => x.GroupName))
-                            .Where(x => x.SchoolYear == schoolYear)
+                            .Where(x => x.SchoolYear.ToLower() == schoolYear.ToLower())
                             .ToListAsync());
         }
 

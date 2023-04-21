@@ -31,7 +31,6 @@ export class AdminCoordinatorTableItemComponent implements OnInit {
     this.section = this.faculty.sections.map((r) => r.name);
 
     this.fetchAllSY();
-    // this.fetchAllSection();
   }
 
   fetchAllSY() {
@@ -42,22 +41,19 @@ export class AdminCoordinatorTableItemComponent implements OnInit {
     });
   }
 
-  // fetchAllSection() {
-  //   this._schoolService.getSection().subscribe({
-  //     next: (section) => {
-  //       this.allSection = section;
-  //     }
-  //   });
-  // }
-
   toggleEditButton() {
     this.isOpen = !this.isOpen;
   }
 
   //* School Year
   toggleYearDropDown() {
-    this.fetchSection();
     this.isOpenYearDropDown = !this.isOpenYearDropDown;
+  }
+  
+  clickYearButton() {
+
+    this.fetchSection();
+    this.toggleYearDropDown();
   }
 
   setYear(section: any) {

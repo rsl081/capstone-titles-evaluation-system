@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230415161145_AddHearingFile")]
-    partial class AddHearingFile
+    [Migration("20230421000733_ChangeTeamAttr")]
+    partial class ChangeTeamAttr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -341,12 +341,17 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Teams");
                 });
@@ -527,9 +532,19 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Team", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
                         .WithMany("Teams")
                         .HasForeignKey("AppUserId");
+
+                    b.HasOne("Core.Entities.Group", "Group")
+                        .WithMany("Teams")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -566,6 +581,11 @@ namespace Infrastructure.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.Group", b =>
+                {
+                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("Core.Entities.Identity.AppRole", b =>
