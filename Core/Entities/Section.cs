@@ -15,7 +15,7 @@ namespace Core.Entities
         public School School { get; set; }
         public Guid SchoolId { get; set; }
         [JsonIgnore]
-        public AppUser AppUser { get; set; }
-        public string AppUserId { get; set; }
+        public List<AppUserSection> AppUserSections { get; set; } = new List<AppUserSection>();
+        
     }
 }

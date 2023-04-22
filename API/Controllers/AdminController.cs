@@ -84,8 +84,8 @@ namespace API.Controllers
                 .Include(p => p.UserPhoto)
                 .Include(r => r.UserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(s => s.Sections)
-                .ThenInclude(s => s.School)
+                .Include(s => s.AppUserSections)
+                .ThenInclude(s => s.Section)
                 .Where(u => u.UserRoles.All(r => r.Role.Name == "Coordinator"))
                 .ToListAsync();
           
@@ -108,8 +108,9 @@ namespace API.Controllers
                 .Include(j => j.JustiFiles)
                 .Include(r => r.UserRoles)
                 .ThenInclude(r => r.Role)
-                .Include(s => s.Sections)
-                .ThenInclude(s => s.School)
+                .Include(s => s.AppUserSections)
+                .ThenInclude(s => s.Section)
+                .ThenInclude(g => g.Groups)
                 .Where(u => u.UserRoles.All(r => r.Role.Name == "Student"))
                 .ToListAsync();
           

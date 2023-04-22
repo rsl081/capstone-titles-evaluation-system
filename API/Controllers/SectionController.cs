@@ -71,19 +71,49 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPut("assign/{id}")]
-        public async Task<ActionResult<SectionAssignDto>> AssignSectionCoordinator(
-            Guid id, 
+        // [HttpPut("assign/{id}")]
+        // public async Task<ActionResult<SectionAssignDto>> AssignSectionCoordinator(
+        //     Guid id, 
+        //     SectionAssignDto sectionCreateDto)
+        // {
+        //     var section = await _dataContext
+        //                             .Sections.FindAsync(id);
+
+        //     if(section == null) return BadRequest();
+
+        //     _mapper.Map(sectionCreateDto, section);
+
+        //     _dataContext.Sections.Update(section);
+        //     await _dataContext.SaveChangesAsync();
+
+        //     return Ok();
+        // }
+
+        // [HttpPut("assign")]
+        // public async Task<ActionResult<SectionAssignDto>> AssignSectionCoordinator(
+        //     SectionAssignDto sectionCreateDto)
+        // {
+        //     // var section = await _dataContext
+        //     //                         .Sections.FindAsync(id);
+
+        //     // if(section == null) return BadRequest();
+
+        //     // _mapper.Map(sectionCreateDto, section);
+
+        //     _dataContext.AppUserSections.Update(sectionCreateDto);
+        //     await _dataContext.SaveChangesAsync();
+
+        //     return Ok();
+        // }
+
+        [HttpPost("assign")]
+         public async Task<ActionResult<SectionAssignDto>> AssignSectionCoordinator(
             SectionAssignDto sectionCreateDto)
         {
-            var section = await _dataContext
-                                    .Sections.FindAsync(id);
+            var section = _mapper.Map<SectionAssignDto, 
+                            AppUserSection>(sectionCreateDto);
 
-            if(section == null) return BadRequest();
-
-            _mapper.Map(sectionCreateDto, section);
-
-            _dataContext.Sections.Update(section);
+            _dataContext.AppUserSections.Add(section);
             await _dataContext.SaveChangesAsync();
 
             return Ok();

@@ -33,15 +33,15 @@ namespace API.Helpers
 
             CreateMap<AppUser, CoordinatorToReturn>()
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
-                .ForMember(p => p.Sections, o => 
-                    o.MapFrom(s => s.Sections.Select(s => s)))
+                .ForMember(p => p.AppUserSections, o => 
+                    o.MapFrom(s => s.AppUserSections.Select(s => s.Section)))
                 .ForMember(p => p.UserRoles, o => 
                     o.MapFrom(s => s.UserRoles.Select(user => user.Role)));
 
             CreateMap<AppUser, StudentToReturnDto>()
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
-                .ForMember(p => p.Sections, o => 
-                    o.MapFrom(s => s.Sections.Select(s => s)))
+                .ForMember(p => p.AppUserSections, o => 
+                    o.MapFrom(s => s.AppUserSections.Select(s => s.Section)))
                 .ForMember(j => j.JustiFile, o => o.MapFrom(
                     s => s.JustiFiles.Select(j => j)
                 ));
@@ -56,6 +56,8 @@ namespace API.Helpers
 
             CreateMap<TeamCreateDto, Team>();
             CreateMap<TeamAssignDto, Team>(); 
+            
+            CreateMap<SectionAssignDto, AppUserSection>();
         }
     }
 }

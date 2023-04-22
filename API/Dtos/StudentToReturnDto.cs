@@ -15,7 +15,7 @@ namespace API.Dtos
         public List<Object> Teams { get; set; } = new List<Object>();
         public List<Object> JustiFile { get; set; } = new List<Object>();
         public string Token { get; set; }
-        public ICollection<Object> Sections { get; set; }
+        public ICollection<Object> AppUserSections { get; set; }
         
         [JsonIgnore]
         public DateTime Created { get; set; }

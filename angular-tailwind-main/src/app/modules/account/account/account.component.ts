@@ -11,12 +11,14 @@ export class AccountComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   userParse: any;
+  userRole: any;
 
   constructor(
     private _accountService: AccountService,
     private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
+    this.userRole = this._accountService.getRole();
     this.form = this._formBuilder.group({
       resetPassword: [
         '',

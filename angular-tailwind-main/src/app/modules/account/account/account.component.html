@@ -55,6 +55,7 @@
           </div>
       </div>   -->
   </div>
-  <div team-table class="mt-4 md:col-span-2 xl:col-span-3"></div>
+
+  <div *ngIf="userRole === 'Student'" team-table class="mt-4 md:col-span-2 xl:col-span-3"></div>
 </div>
 

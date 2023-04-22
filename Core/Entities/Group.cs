@@ -17,5 +17,6 @@ namespace Core.Entities
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
         public List<Team> Teams { get; set; } = new List<Team>();
+        public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();
     }
 }

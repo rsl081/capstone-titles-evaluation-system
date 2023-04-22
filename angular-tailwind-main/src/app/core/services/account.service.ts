@@ -27,6 +27,16 @@ export class AccountService {
     );
   }
 
+  getRole() {
+
+    let user = localStorage.getItem('user');
+    let obj = JSON.parse(user);
+    return obj.role
+
+  }
+
+
+
   registerFaculty(values: any) {
     return this.http.post<IUser>(this.baseURL + 'account/faculty/register', values);
   }
