@@ -80,6 +80,18 @@ namespace API.Controllers
             return Ok();
         }
 
+        [HttpGet("{groupName}")]
+        public async Task<ActionResult> GetSpecificGroup(
+            string groupName
+        )
+        {
+            return Ok(await _dataContext.Groups
+                            .Include(j => j.JustiFiles)
+                            .OrderBy(g => g.GroupName)
+                            .Where(x => x.GroupName.ToLower() == groupName.ToLower())
+                            .ToListAsync());
+        }
+
 
     }
 }

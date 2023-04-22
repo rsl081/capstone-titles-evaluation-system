@@ -37,8 +37,8 @@ export class SchoolService {
     return this.http.get<any>(this.baseURL + 'section').pipe((s) => s);
   }
 
-  assignSection(id: any, coordinatorId: any) {
-    return this.http.put<any>(this.baseURL + 'section/assign/' + id, coordinatorId).pipe((s) => s);
+  assignSection(body: any) {
+    return this.http.post<any>(this.baseURL + 'section/assign', body).pipe((s) => s);
   }
 
   getSpecificSection(sectionName: string) {
@@ -49,10 +49,16 @@ export class SchoolService {
     return this.http.post<any>(this.baseURL + 'group', gr);
   }
 
-  assignGroup(id:any,appUserId: any) {
+  assignGroup(id: any, appUserId: any) {
     return this.http.put<any>(this.baseURL + 'group/assign/' + id, appUserId);
   }
 
+  getSpecificGroup(groupName: string) {
+    return this.http.get<any>(this.baseURL 
+      + 'group/' + groupName).pipe((s) => s);
+  }
+
+  //* Team
   addTeam(team: any) {
     return this.http.post<any>(this.baseURL + 'teams', team);
   }
@@ -61,9 +67,7 @@ export class SchoolService {
     return this.http.put<any>(this.baseURL + 'teams/assign/' + id, student).pipe((s) => s);
   }
 
-
   deleteTeam(id: any) {
     return this.http.delete<any>(this.baseURL + 'teams/' + id).pipe((s) => s);
   }
-  
 }

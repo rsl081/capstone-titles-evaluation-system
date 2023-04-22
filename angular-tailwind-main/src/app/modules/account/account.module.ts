@@ -24,6 +24,10 @@ import { TeamTableItemComponent } from './student-account/team-table-item/team-t
     FormsModule, 
     ReactiveFormsModule,
     FileUploadModule,
+  ],
+  exports: [
+    TeamTableComponent,
+    TeamTableItemComponent,
   ]
 })
 export class AccountModule { }

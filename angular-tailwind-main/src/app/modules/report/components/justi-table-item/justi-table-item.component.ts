@@ -21,7 +21,7 @@ export class JustiTableItemComponent {
     this.fileName = this.justFile.justiFile.map(e => e.fileName)
     this.grade = this.justFile.justiFile.map(e => e.grade)
     this.status = this.justFile.justiFile.map(e => e.status)
-    this.sectionName = this.justFile.sections.map((e) => e.name);
-    this.sectionGroup = this.justFile.sections.map((e) => e.group);
+    this.sectionName = this.justFile.appUserSections.map((e) => e.name);
+    this.sectionGroup = this.justFile.appUserSections.map((e) => e.groups[0].groupName);
   }
 }

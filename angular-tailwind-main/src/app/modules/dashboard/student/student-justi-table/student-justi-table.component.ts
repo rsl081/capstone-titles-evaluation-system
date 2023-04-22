@@ -35,7 +35,7 @@ export class StudentJustiTableComponent implements OnInit {
       next: (r: any) => {
         this.activeStudent = r.justiFiles.map((r) => r);
         this.userId = r.id;
-        this.groupId = r.groups[0].id
+        this.groupId = r.sections[0].groups[0].id;
       },
       error: (e) => {
         console.log(e);

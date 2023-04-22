@@ -27,6 +27,7 @@ import { HearingTableComponent } from './student/hearing-table/hearing-table.com
 import { HearingTableItemComponent } from './student/hearing-table-item/hearing-table-item.component';
 import { ProposalTableComponent } from './components/coordinator/proposal-table/proposal-table.component';
 import { ProposalTableItemComponent } from './components/coordinator/proposal-table-item/proposal-table-item.component';
+import { AccountModule } from '../account/account.module';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ProposalTableItemComponent } from './components/coordinator/proposal-ta
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
+    AccountModule,
   ],
 })
 export class DashboardModule {}
