@@ -49,6 +49,10 @@ export class SchoolService {
     return this.http.post<any>(this.baseURL + 'group', gr);
   }
 
+  assignGroup(id:any,appUserId: any) {
+    return this.http.put<any>(this.baseURL + 'group/assign/' + id, appUserId);
+  }
+
   addTeam(team: any) {
     return this.http.post<any>(this.baseURL + 'teams', team);
   }

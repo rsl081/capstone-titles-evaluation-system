@@ -18,6 +18,7 @@ namespace Infrastructure.Data
         public DbSet<Section> Sections { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<AppUserSection> AppUserSections { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base
         (options)
         {}
@@ -50,6 +51,7 @@ namespace Infrastructure.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+                
         }
     }
 }

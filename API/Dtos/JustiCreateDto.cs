@@ -11,5 +11,6 @@ namespace API.Dtos
         public Guid Id { get; set; }
         public string Url { get; set; }
         public string AppUserId { get; set; }
+        public Guid GroupId { get; set; }
     }
 }

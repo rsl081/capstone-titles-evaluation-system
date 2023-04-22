@@ -25,6 +25,8 @@ import { StudentJustiTableItemComponent } from './student/student-justi-table-it
 import { FileUploadModule } from 'ng2-file-upload';
 import { HearingTableComponent } from './student/hearing-table/hearing-table.component';
 import { HearingTableItemComponent } from './student/hearing-table-item/hearing-table-item.component';
+import { ProposalTableComponent } from './components/coordinator/proposal-table/proposal-table.component';
+import { ProposalTableItemComponent } from './components/coordinator/proposal-table-item/proposal-table-item.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { HearingTableItemComponent } from './student/hearing-table-item/hearing-
     StudentJustiTableItemComponent,
     HearingTableComponent,
     HearingTableItemComponent,
+    ProposalTableComponent,
+    ProposalTableItemComponent,
   ],
   imports: [
     CommonModule,

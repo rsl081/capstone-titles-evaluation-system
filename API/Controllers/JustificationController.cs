@@ -40,9 +40,9 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("add-justification/{appUserId}")]
+        [HttpPost("add-justification/{appUserId}/{groupId}")]
         public async Task<ActionResult<JustiCreateDto>> AddJustiFile(
-            IFormFile file, string appUserId)
+            IFormFile file, string appUserId, Guid groupId)
         {
             var appUser = await _userManager.Users.SingleOrDefaultAsync(
                 x => x.Id == appUserId);
@@ -57,6 +57,7 @@ namespace API.Controllers
                 PublicId = result.PublicId,
                 FileName = result.PublicId,
                 AppUserId = appUser.Id,
+                GroupId = groupId
             };
 
             _dataContext.JustiFiles.Add(fileRepo);

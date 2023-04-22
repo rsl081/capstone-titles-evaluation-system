@@ -21,6 +21,9 @@ namespace Core.Entities
         [JsonIgnore]
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
+        [JsonIgnore]
+        public Group Group { get; set; }
+        public Guid GroupId { get; set; }
         
     }
 }

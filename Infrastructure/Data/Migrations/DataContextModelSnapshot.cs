@@ -17,6 +17,27 @@ namespace Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
 
+            modelBuilder.Entity("Core.Entities.AppUserSection", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("SectionId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("SectionId");
+
+                    b.ToTable("AppUserSections");
+                });
+
             modelBuilder.Entity("Core.Entities.Content", b =>
                 {
                     b.Property<Guid>("Id")
@@ -268,6 +289,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Grade")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
@@ -283,6 +307,8 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("JustiFiles");
                 });
@@ -441,6 +467,23 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.AppUserSection", b =>
+                {
+                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
+                        .WithMany("AppUserSections")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Core.Entities.Section", "Section")
+                        .WithMany("AppUserSections")
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Section");
+                });
+
             modelBuilder.Entity("Core.Entities.Group", b =>
                 {
                     b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
@@ -501,7 +544,15 @@ namespace Infrastructure.Data.Migrations
                         .WithMany("JustiFiles")
                         .HasForeignKey("AppUserId");
 
+                    b.HasOne("Core.Entities.Group", "Group")
+                        .WithMany("JustiFiles")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AppUser");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Core.Entities.School", b =>
@@ -513,7 +564,7 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Section", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
+                    b.HasOne("Core.Entities.Identity.AppUser", null)
                         .WithMany("Sections")
                         .HasForeignKey("AppUserId");
 
@@ -522,8 +573,6 @@ namespace Infrastructure.Data.Migrations
                         .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
 
                     b.Navigation("School");
                 });
@@ -583,6 +632,8 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Group", b =>
                 {
+                    b.Navigation("JustiFiles");
+
                     b.Navigation("Teams");
                 });
 
@@ -593,6 +644,8 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
                 {
+                    b.Navigation("AppUserSections");
+
                     b.Navigation("Groups");
 
                     b.Navigation("HearingFiles");
@@ -617,6 +670,8 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Section", b =>
                 {
+                    b.Navigation("AppUserSections");
+
                     b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618

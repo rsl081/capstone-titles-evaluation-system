@@ -154,8 +154,16 @@ export class TeamTableComponent implements OnInit {
         this._schoolService.assignTeam(id, student)
         .subscribe({
           complete: () => {
-            this._accountService.userUpdateNeeded.next(this);
-            this.toggleEditButton();
+            this._schoolService.assignGroup(
+              this.groupId, student).subscribe({
+              complete: () => {
+                this._accountService.userUpdateNeeded.next(this);
+                this.toggleEditButton();
+              },
+              error: (e) => {
+                console.log(e);
+              },
+            });
           },
           error: (e) => {
             console.log(e)

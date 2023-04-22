@@ -14,7 +14,7 @@ namespace API.Dtos
         public string DisplayName { get; set; }
         public bool IsApproved { get; set; }
         public string Expertise { get; set; }
-        public ICollection<Object> Sections { get; set; }
+        public ICollection<Object> AppUserSections { get; set; }
         public ICollection<string> UserRoles { get; set; }
         
         [JsonIgnore]

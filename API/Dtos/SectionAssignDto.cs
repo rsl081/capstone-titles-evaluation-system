@@ -8,5 +8,6 @@ namespace API.Dtos
     public class SectionAssignDto
     {
         public string AppUserId { get; set; }
+        public Guid SectionId { get; set; }
     }
 }

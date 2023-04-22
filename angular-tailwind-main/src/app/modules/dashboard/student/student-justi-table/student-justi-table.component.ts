@@ -15,6 +15,7 @@ export class StudentJustiTableComponent implements OnInit {
   uploader: FileUploader;
   baseURL = environment.apiUrl;
   userId: any;
+  groupId: any;
 
   constructor(private _accountService: AccountService) {}
 
@@ -32,16 +33,14 @@ export class StudentJustiTableComponent implements OnInit {
     let obj = JSON.parse(user);
     this._accountService.getCurrentUser(obj.id).subscribe({
       next: (r: any) => {
-        // this.activeStudent = r.justiFiles.map(r => r);
         this.activeStudent = r.justiFiles.map((r) => r);
         this.userId = r.id;
+        this.groupId = r.groups[0].id
       },
       error: (e) => {
         console.log(e);
       },
     });
-
-    // this.activeStudent = obj.justiFiles.map((r) => r);
   }
 
   uploadImage() {
@@ -51,7 +50,8 @@ export class StudentJustiTableComponent implements OnInit {
   uploadProfilePhoto(id: any) {
     if (this.uploader.queue.length) {
       this.uploader.setOptions({
-        url: this.baseURL + 'justification/add-justification/' + id,
+        url: this.baseURL + 'justification/add-justification/' + id 
+          + '/' + this.groupId,
       });
       this.uploader.uploadAll();
     }
