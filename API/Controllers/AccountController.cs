@@ -83,7 +83,10 @@ namespace API.Controllers
                 .Include(j => j.JustiFiles)
                 .Include(h => h.HearingFiles)
                 .Include(t => t.Teams)
-                .Include(g => g.Groups)
+                .Include(s => s.AppUserSections)
+                .ThenInclude(s => s.Section)
+                .ThenInclude(s => s.Groups)
+                .ThenInclude(s => s.JustiFiles)
                 .SingleOrDefaultAsync(x => x.Email == appUser.Email);
 
             return new UserDto
@@ -97,7 +100,8 @@ namespace API.Controllers
                 JustiFiles = user.JustiFiles,
                 Teams = user.Teams,
                 Groups = user.Groups,
-                HearingFiles = user.HearingFiles
+                HearingFiles = user.HearingFiles,
+                Sections = user.AppUserSections.Select(x => x.Section),
             };
 
         }

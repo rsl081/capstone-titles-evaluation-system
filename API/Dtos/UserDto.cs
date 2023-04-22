@@ -19,7 +19,7 @@ namespace API.Dtos
         public List<Group> Groups { get; set; } = new List<Group>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();
         public List<HearingFile> HearingFiles { get; set; } = new List<HearingFile>();
-        
+        public IEnumerable<Section> Sections { get; set; }
         [JsonIgnore]
         public DateTime Created { get; set; }
 

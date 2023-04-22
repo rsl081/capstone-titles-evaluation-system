@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/core/services/account.service';
+import { SchoolService } from 'src/app/core/services/school.service';
 import { IUser } from 'src/app/shared/models/user';
 
 @Component({
@@ -7,38 +8,63 @@ import { IUser } from 'src/app/shared/models/user';
   templateUrl: './proposal-table.component.html',
   styleUrls: ['./proposal-table.component.scss'],
 })
-export class ProposalTableComponent {
-  public activeFaculty: IUser[] = [];
+export class ProposalTableComponent implements OnInit {
 
-  constructor(private _accountService: AccountService) {}
+  public activeCoordinator: any;
+  public sectionName: any;
+  groupName: any;
+  isDropDownOpen = false;
+  activeGroup: any;
+
+  constructor(
+    private _schoolService: SchoolService,
+    private _accountService: AccountService) {}
   ngOnInit(): void {
-    this.fetchFaculties();
+    this.fetchAppUser();
     this._accountService.userUpdateNeeded.subscribe(() => {
-      this.fetchFaculties();
+      this.fetchAppUser();
     });
   }
 
-  fetchFaculties(): void {
-    this._accountService.getAllFaculty().subscribe({
-      next: (faculty) => (this.activeFaculty = faculty),
-      error: (error) => alert(error.message),
+
+
+  fetchAppUser() {
+    let user = localStorage.getItem('user');
+    let obj = JSON.parse(user);
+
+    this._accountService.getCurrentUser(obj.id).subscribe({
+      next: (student: any) => {
+        this.sectionName = student.sections[0].name;
+        this.groupName = student.sections[0].groups[0].groupName;
+        this.activeCoordinator = student.sections[0].groups[0].justiFiles.map((t) => t);
+        this.activeGroup = student.sections[0].groups;
+        console.log(this.activeCoordinator);
+      },
+      error: (error) => console.log(error),
     });
   }
 
-  onSubmit() {
-    //accept the faculty
+  setGroupName(grpName) {
+    this.groupName = grpName;
+    this._schoolService.getSpecificGroup(this.groupName)
+      .subscribe({
+        next:(g) => {
+
+          this.activeCoordinator = g[0].justiFiles;
+          console.log('testeqw ' + this.activeCoordinator);
+        
+        },
+        error: (e) => {
+          console.log(e)
+        }
+    })
   }
 
-  openDialog() {
-    console.log('test');
+  getGroupName() {
+    return this.groupName;
   }
 
-  closeDialog() {
-    // notify home component that the overlay is inactive
-    // this.overlayService.hideOverlay.emit();
-  }
-
-  isDialogOpen() {
-    return false;
+  toggleDropDown() {
+    this.isDropDownOpen = !this.isDropDownOpen;
   }
 }

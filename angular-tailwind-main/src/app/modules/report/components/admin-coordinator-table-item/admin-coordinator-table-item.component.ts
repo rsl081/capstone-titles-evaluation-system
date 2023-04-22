@@ -9,7 +9,7 @@ import { IUser } from 'src/app/shared/models/user';
   styleUrls: ['./admin-coordinator-table-item.component.scss'],
 })
 export class AdminCoordinatorTableItemComponent implements OnInit {
-  @Input() faculty = <IUser>{};
+  @Input() faculty = <any>{};
   userRole = [];
   section: any;
 
@@ -28,7 +28,7 @@ export class AdminCoordinatorTableItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.userRole = this.faculty.userRoles.map((e) => e);
-    this.section = this.faculty.sections.map((r) => r.name);
+    this.section = this.faculty.appUserSections.map((r) => r.name);
 
     this.fetchAllSY();
   }
@@ -105,15 +105,17 @@ export class AdminCoordinatorTableItemComponent implements OnInit {
 
     let unassignCoordinator = {
       appUserId: null,
+      sectionId: null,
     };
 
-    let id = this.faculty.sections.map((r) => r.id);
+    let id = this.faculty.appUserSections.map((r) => r.id);
 
     if (id == '') {
       let coordinator = {
         appUserId: this.faculty.id,
+        sectionId: this.getSectionId(),
       };
-      this._schoolService.assignSection(this.getSectionId(), coordinator).subscribe({
+      this._schoolService.assignSection(coordinator).subscribe({
         error: (e) => {
           console.log(e);
         },
@@ -125,15 +127,16 @@ export class AdminCoordinatorTableItemComponent implements OnInit {
       return;
     }
 
-    this._schoolService.assignSection(id, unassignCoordinator).subscribe({
+    this._schoolService.assignSection(unassignCoordinator).subscribe({
       error: (e) => {
         console.log(e);
       },
       complete: () => {
         let coordinator = {
           appUserId: this.faculty.id,
+          sectionId: this.getSectionId(),
         };
-        this._schoolService.assignSection(this.getSectionId(), coordinator).subscribe({
+        this._schoolService.assignSection(coordinator).subscribe({
           error: (e) => {
             console.log(e);
           },
