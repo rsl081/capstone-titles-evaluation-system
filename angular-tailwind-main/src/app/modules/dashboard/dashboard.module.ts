@@ -30,6 +30,8 @@ import { ProposalTableItemComponent } from './components/coordinator/proposal-ta
 import { AccountModule } from '../account/account.module';
 import { ApprovalTableComponent } from './components/coordinator/approval-table/approval-table.component';
 import { ApprovalTableItemComponent } from './components/coordinator/approval-table-item/approval-table-item.component';
+import { ThesisTableComponent } from './panelandadviser/thesis-table/thesis-table.component';
+import { ThesisTableItemComponent } from './panelandadviser/thesis-table-item/thesis-table-item.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { ApprovalTableItemComponent } from './components/coordinator/approval-ta
     ProposalTableItemComponent,
     ApprovalTableComponent,
     ApprovalTableItemComponent,
+    ThesisTableComponent,
+    ThesisTableItemComponent,
   ],
   imports: [
     CommonModule,
