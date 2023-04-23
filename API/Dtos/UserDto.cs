@@ -16,10 +16,11 @@ namespace API.Dtos
         public string Expertise { get; set; }
         public string Token { get; set; }
         public List<Team> Teams { get; set; } = new List<Team>();
-        public List<Group> Groups { get; set; } = new List<Group>();
         public List<JustiFile> JustiFiles { get; set; } = new List<JustiFile>();
+        // public List<Group> Groups { get; set; } = new List<Group>();
         public List<HearingFile> HearingFiles { get; set; } = new List<HearingFile>();
         public IEnumerable<Section> Sections { get; set; }
+        public IEnumerable<Group> Groups { get; set; }
         [JsonIgnore]
         public DateTime Created { get; set; }
 

@@ -87,6 +87,9 @@ namespace API.Controllers
                 .ThenInclude(s => s.Section)
                 .ThenInclude(s => s.Groups)
                 .ThenInclude(s => s.JustiFiles)
+                .Include(g => g.AppUserGroups)
+                .ThenInclude(g => g.Group)
+                .ThenInclude(j => j.JustiFiles)
                 .SingleOrDefaultAsync(x => x.Email == appUser.Email);
 
             return new UserDto
@@ -99,9 +102,9 @@ namespace API.Controllers
                 Created = user.Created,
                 JustiFiles = user.JustiFiles,
                 Teams = user.Teams,
-                Groups = user.Groups,
                 HearingFiles = user.HearingFiles,
                 Sections = user.AppUserSections.Select(x => x.Section),
+                Groups = user.AppUserGroups.Select(x => x.Group)
             };
 
         }
@@ -117,7 +120,8 @@ namespace API.Controllers
                 Email = registerFacultyDto.Email,
                 UserName = registerFacultyDto.Email,
                 Expertise = registerFacultyDto.Expertise,
-                // UserPhoto = new UserPhoto("assets/img/user_icon_default.png")
+                EmailConfirmed = true,
+                UserPhoto = new UserPhoto("https://res.cloudinary.com/dsb2zudcg/image/upload/v1681628977/Accreditor_bqcqwj.png")
             };
 
             var result = await _userManager.CreateAsync(
@@ -161,7 +165,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Id = user.Id,
-                // PhotoUrl = user.UserPhoto.Url,
+                UserPhoto = user.UserPhoto.Url,
                 DisplayName = user.DisplayName,
                 Expertise = user.Expertise,
                 Token = await _tokenService.CreateToken(user),
@@ -180,8 +184,8 @@ namespace API.Controllers
                 DisplayName = registerStudentDto.DisplayName,
                 Email = registerStudentDto.Email,
                 UserName = registerStudentDto.Email,
-                // Teams = registerStudentDto.Teams,
-                // UserPhoto = new UserPhoto("assets/img/user_icon_default.png")
+                EmailConfirmed = true,
+                UserPhoto = new UserPhoto("https://res.cloudinary.com/dsb2zudcg/image/upload/v1681628977/Sub_abqbux.png"),
             };
 
             var result = await _userManager.CreateAsync(
@@ -227,9 +231,8 @@ namespace API.Controllers
             return new StudentToReturnDto
             {
                 Id = user.Id,
-                // PhotoUrl = user.UserPhoto.Url,
+                UserPhoto = user.UserPhoto.Url,
                 DisplayName = user.DisplayName,
-                // Teams = user.Teams,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
                 Created = user.Created

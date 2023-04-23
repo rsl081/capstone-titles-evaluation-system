@@ -25,5 +25,6 @@ namespace Core.Entities.Identity
         public List<HearingFile> HearingFiles { get; set; } = new List<HearingFile>();
         public ICollection<AppUserRole> UserRoles { get; set; }
         public List<AppUserSection> AppUserSections { get; set; } = new List<AppUserSection>();
+        public List<AppUserGroup> AppUserGroups { get; set; } = new List<AppUserGroup>();
     }
 }

@@ -40,13 +40,10 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("add-justification/{appUserId}/{groupId}")]
+        [HttpPost("add-justification/{groupId}")]
         public async Task<ActionResult<JustiCreateDto>> AddJustiFile(
-            IFormFile file, string appUserId, Guid groupId)
+            IFormFile file, Guid groupId)
         {
-            var appUser = await _userManager.Users.SingleOrDefaultAsync(
-                x => x.Id == appUserId);
-
             var result = await _fileService.AddFileAsync(file);
 
             if (result.Error != null) return BadRequest(result.Error.Message);
@@ -56,7 +53,6 @@ namespace API.Controllers
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
                 FileName = result.PublicId,
-                AppUserId = appUser.Id,
                 GroupId = groupId
             };
 

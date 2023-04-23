@@ -19,6 +19,7 @@ namespace Infrastructure.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<AppUserSection> AppUserSections { get; set; }
+        public DbSet<AppUserGroup> AppUserGroups { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base
         (options)
         {}

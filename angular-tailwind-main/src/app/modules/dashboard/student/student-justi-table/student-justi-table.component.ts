@@ -33,9 +33,9 @@ export class StudentJustiTableComponent implements OnInit {
     let obj = JSON.parse(user);
     this._accountService.getCurrentUser(obj.id).subscribe({
       next: (r: any) => {
-        this.activeStudent = r.justiFiles.map((r) => r);
+        this.activeStudent = r.groups[0].justiFiles.map(j => j);
         this.userId = r.id;
-        this.groupId = r.sections[0].groups[0].id;
+        this.groupId = r.groups[0].id;
       },
       error: (e) => {
         console.log(e);
@@ -50,8 +50,8 @@ export class StudentJustiTableComponent implements OnInit {
   uploadProfilePhoto(id: any) {
     if (this.uploader.queue.length) {
       this.uploader.setOptions({
-        url: this.baseURL + 'justification/add-justification/' + id 
-          + '/' + this.groupId,
+        url: this.baseURL + 'justification/add-justification/' + 
+          this.groupId,
       });
       this.uploader.uploadAll();
     }

@@ -49,13 +49,12 @@ export class SchoolService {
     return this.http.post<any>(this.baseURL + 'group', gr);
   }
 
-  assignGroup(id: any, appUserId: any) {
-    return this.http.put<any>(this.baseURL + 'group/assign/' + id, appUserId);
+  assignGroup(body: any) {
+    return this.http.post<any>(this.baseURL + 'group/assign', body).pipe((s) => s);
   }
 
   getSpecificGroup(groupName: string) {
-    return this.http.get<any>(this.baseURL 
-      + 'group/' + groupName).pipe((s) => s);
+    return this.http.get<any>(this.baseURL + 'group/' + groupName).pipe((s) => s);
   }
 
   //* Team
