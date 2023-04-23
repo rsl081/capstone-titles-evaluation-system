@@ -66,6 +66,7 @@ export class TeamTableComponent implements OnInit {
       next: (student: any) => {
         this.activeStudent = student.teams.map((t) => t);
         this.studentId = student.id;
+        this.setGroupId(student.groups[0].id);
       },
       error: (error) => console.log(error),
     });
@@ -146,7 +147,6 @@ export class TeamTableComponent implements OnInit {
         id = e
       },
       complete: () => {
-        alert('Successfully Added!')
         let student = {
           appUserId: this.studentId,
           groupId: this.groupId,
@@ -155,16 +155,9 @@ export class TeamTableComponent implements OnInit {
         this._schoolService.assignTeam(id, student)
         .subscribe({
           complete: () => {
-            this._schoolService.assignGroup(
-              student).subscribe({
-              complete: () => {
-                this._accountService.userUpdateNeeded.next(this);
-                this.toggleEditButton();
-              },
-              error: (e) => {
-                console.log(e);
-              },
-            });
+            alert('Successfully Added');
+            this.toggleEditButton();
+            this._accountService.userUpdateNeeded.next(this);
           },
           error: (e) => {
             console.log(e)

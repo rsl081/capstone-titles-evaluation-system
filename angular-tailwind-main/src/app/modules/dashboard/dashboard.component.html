@@ -93,5 +93,11 @@
         <div proposal-table class="mb-4 md:col-span-2 xl:col-span-3"></div>
 
     </div>
+
+    <div *ngIf="userRole === 'Adviser' || userRole === 'Panel'" class="flex flex-col">
+
+        <div thesis-table class="mb-4 md:col-span-2 xl:col-span-3"></div>
+
+    </div>
     
 </div>
