@@ -64,6 +64,7 @@ namespace API.Controllers
                 .Include(p => p.UserPhoto)
                 .Include(r => r.UserRoles)
                 .ThenInclude(r => r.Role)
+                .Include(s => s.Groups)
                 .Where(u => u.UserRoles.All(r => r.Role.Name == "Faculty"))
                 .ToListAsync();
           
@@ -137,6 +138,58 @@ namespace API.Controllers
             await _userManager.UpdateAsync(faculty);
            
             return Ok();
+        }
+
+        [HttpGet("faculty-panel-and-adviser/all")]
+        public async Task<ActionResult<Pagination<StudentToReturnDto>>> GetAllFacultyAdviserAndPanel()
+        {
+
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(j => j.JustiFiles)
+                .Include(r => r.UserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(s => s.AppUserSections)
+                .ThenInclude(s => s.Section)
+                .Include(s => s.AppUserGroups)
+                .ThenInclude(s => s.Group)
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Panel") ||
+                    u.UserRoles.All(r => r.Role.Name == "Adviser") || 
+                    u.UserRoles.All(r => r.Role.Name == "Faculty"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            var data = _mapper.Map<IReadOnlyList<AppUser>,
+                IReadOnlyList<FacultyToReturn>>(user);
+
+            return Ok(new Pagination<FacultyToReturn>(totalItems, data));
+
+        }
+        [HttpGet("panel-and-adviser/all")]
+        public async Task<ActionResult<Pagination<FacultyToReturn>>> GetAllAdviserAndPanel()
+        {
+
+            var user = await _userManager.Users
+                .Include(p => p.UserPhoto)
+                .Include(j => j.JustiFiles)
+                .Include(r => r.UserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(s => s.AppUserSections)
+                .ThenInclude(s => s.Section)
+                .Include(s => s.AppUserGroups)
+                .ThenInclude(s => s.Group)
+                .Where(u => u.UserRoles.All(r => r.Role.Name == "Panel") ||
+                    u.UserRoles.All(r => r.Role.Name == "Adviser"))
+                .ToListAsync();
+          
+            var totalItems = user.Count();
+
+            var data = _mapper.Map<IReadOnlyList<AppUser>,
+                IReadOnlyList<FacultyToReturn>>(user);
+
+            return Ok(new Pagination<FacultyToReturn>(totalItems, data));
+
         }
         
         [HttpPut("faculty/edit-roles/{username}")]

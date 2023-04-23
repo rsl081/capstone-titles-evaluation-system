@@ -28,6 +28,10 @@ namespace API.Helpers
             CreateMap<UserPhoto, ContentPhotoCreateDto>();
             CreateMap<AppUser, FacultyToReturn>()
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
+                .ForMember(p => p.AppUserSections, o => 
+                    o.MapFrom(s => s.AppUserSections.Select(s => s.Section)))
+                .ForMember(p => p.AppUserGroups, o => 
+                    o.MapFrom(s => s.AppUserGroups.Select(s => s.Group)))
                 .ForMember(p => p.UserRoles, o => 
                     o.MapFrom(s => s.UserRoles.Select(user => user.Role)));
 
@@ -35,6 +39,8 @@ namespace API.Helpers
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
                 .ForMember(p => p.AppUserSections, o => 
                     o.MapFrom(s => s.AppUserSections.Select(s => s.Section)))
+                .ForMember(p => p.AppUserGroups, o => 
+                    o.MapFrom(s => s.AppUserGroups.Select(s => s.Group)))
                 .ForMember(p => p.UserRoles, o => 
                     o.MapFrom(s => s.UserRoles.Select(user => user.Role)));
 
@@ -42,6 +48,8 @@ namespace API.Helpers
                 .ForMember(p => p.UserPhoto, o => o.MapFrom(s => s.UserPhoto.Url))
                 .ForMember(p => p.AppUserSections, o => 
                     o.MapFrom(s => s.AppUserSections.Select(s => s.Section)))
+                .ForMember(p => p.AppUserGroups, o => 
+                    o.MapFrom(s => s.AppUserGroups.Select(s => s.Group)))
                 .ForMember(j => j.JustiFile, o => o.MapFrom(
                     s => s.JustiFiles.Select(j => j)
                 ));
@@ -49,6 +57,7 @@ namespace API.Helpers
             CreateMap<FacultyUpdateDto, AppUser>();
             CreateMap<GroupCreateDto, Group>();
             CreateMap<GroupAssignDto, Group>(); 
+            CreateMap<GroupAssignDto, AppUserGroup>(); 
 
             CreateMap<JustiCreateDto, HearingFile>().ReverseMap();
             CreateMap<JustiUpdateDto, HearingFile>();

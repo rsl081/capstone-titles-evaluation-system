@@ -16,6 +16,7 @@ namespace API.Dtos
         public List<Object> JustiFile { get; set; } = new List<Object>();
         public string Token { get; set; }
         public ICollection<Object> AppUserSections { get; set; }
+        public ICollection<Object> AppUserGroups { get; set; }
         
         [JsonIgnore]
         public DateTime Created { get; set; }

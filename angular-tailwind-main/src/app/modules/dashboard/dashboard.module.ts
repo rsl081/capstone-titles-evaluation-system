@@ -28,6 +28,8 @@ import { HearingTableItemComponent } from './student/hearing-table-item/hearing-
 import { ProposalTableComponent } from './components/coordinator/proposal-table/proposal-table.component';
 import { ProposalTableItemComponent } from './components/coordinator/proposal-table-item/proposal-table-item.component';
 import { AccountModule } from '../account/account.module';
+import { ApprovalTableComponent } from './components/coordinator/approval-table/approval-table.component';
+import { ApprovalTableItemComponent } from './components/coordinator/approval-table-item/approval-table-item.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { AccountModule } from '../account/account.module';
     HearingTableItemComponent,
     ProposalTableComponent,
     ProposalTableItemComponent,
+    ApprovalTableComponent,
+    ApprovalTableItemComponent,
   ],
   imports: [
     CommonModule,
@@ -62,5 +66,9 @@ import { AccountModule } from '../account/account.module';
     FileUploadModule,
     AccountModule,
   ],
+  exports: [
+    ApprovalTableComponent,
+    ApprovalTableItemComponent,
+  ]
 })
 export class DashboardModule {}

@@ -1,0 +1,30 @@
+<div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row">
+  <div class="mb-4 flex items-center justify-between">
+    <div class="flex-col items-center">
+      <h3 class="text-md font-bold text-gray-900 dark:text-night-50">Panel And Adviser</h3>
+    </div>
+  </div>
+
+  <div class="relative overflow-x-auto">
+    <table class="w-full table-auto">
+     
+      <thead class="text-xs uppercase text-gray-400 dark:text-night-300">
+        <tr>
+          <th class="py-3 text-left">Email</th>
+          <th class="py-3 text-right">Role</th>
+          <th class="py-3 text-right">Group</th>
+          <th class="py-3 text-right">Action</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr
+          *ngFor="let coordinator of activeCoordinator"
+          [faculty]="coordinator"
+          assign-table-item
+          class="border-b border-dashed border-gray-200 hover:bg-gray-100 dark:border-night-500 dark:hover:bg-night-600"></tr>
+      </tbody>
+      
+    </table>
+  </div>
+</div>

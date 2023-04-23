@@ -63,18 +63,15 @@ namespace API.Controllers
             return Ok();
         }
         //-------------------
-        [HttpPut("assign/{id}")]
+        [HttpPost("assign")]
         public async Task<ActionResult<GroupAssignDto>> AssignGroupAdviserOrPanel(
-            Guid id, 
             GroupAssignDto groupAssignDto)
         {
-            var section = await _dataContext.Groups.FindAsync(id);
 
-            if(section == null) return BadRequest();
+            var section = _mapper.Map<GroupAssignDto, 
+                            AppUserGroup>(groupAssignDto);
 
-            _mapper.Map(groupAssignDto, section);
-
-            _dataContext.Groups.Update(section);
+            _dataContext.AppUserGroups.Add(section);
             await _dataContext.SaveChangesAsync();
 
             return Ok();

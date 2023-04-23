@@ -149,13 +149,14 @@ export class TeamTableComponent implements OnInit {
         alert('Successfully Added!')
         let student = {
           appUserId: this.studentId,
+          groupId: this.groupId,
         };
 
         this._schoolService.assignTeam(id, student)
         .subscribe({
           complete: () => {
             this._schoolService.assignGroup(
-              this.groupId, student).subscribe({
+              student).subscribe({
               complete: () => {
                 this._accountService.userUpdateNeeded.next(this);
                 this.toggleEditButton();

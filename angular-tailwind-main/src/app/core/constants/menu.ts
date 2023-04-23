@@ -33,27 +33,27 @@ export class Menu {
         {
           icon: 'assets/icons/outline/global-alt.svg',
           label: 'Dashboard',
-          route: '/dashboard',
+          route: '/main/dashboard',
         },
         {
           icon: 'assets/icons/outline/chart-bar.svg',
           label: 'Report',
-          route: '/report',
+          route: '/main/report',
         },
         {
           icon: 'assets/icons/outline/user.svg',
           label: 'Account',
-          route: '/account',
+          route: '/main/account',
         },
         {
           icon: 'assets/icons/outline/clipboard-document-list.svg',
           label: 'Content',
-          route: '/content',
+          route: '/main/content',
         },
         {
           icon: 'assets/icons/outline/information-circle.svg',
           label: 'About BulSU',
-          route: '/about',
+          route: '/main/about',
         },
       ],
     },

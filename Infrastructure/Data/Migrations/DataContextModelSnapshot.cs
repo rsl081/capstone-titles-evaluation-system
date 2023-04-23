@@ -17,6 +17,27 @@ namespace Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
 
+            modelBuilder.Entity("Core.Entities.AppUserGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("AppUserGroups");
+                });
+
             modelBuilder.Entity("Core.Entities.AppUserSection", b =>
                 {
                     b.Property<Guid>("Id")
@@ -467,6 +488,23 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.AppUserGroup", b =>
+                {
+                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
+                        .WithMany("AppUserGroups")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Group");
+                });
+
             modelBuilder.Entity("Core.Entities.AppUserSection", b =>
                 {
                     b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
@@ -644,6 +682,8 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
                 {
+                    b.Navigation("AppUserGroups");
+
                     b.Navigation("AppUserSections");
 
                     b.Navigation("Groups");

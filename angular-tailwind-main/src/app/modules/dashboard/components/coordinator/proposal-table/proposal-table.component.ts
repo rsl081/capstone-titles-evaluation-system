@@ -38,7 +38,6 @@ export class ProposalTableComponent implements OnInit {
         this.groupName = student.sections[0].groups[0].groupName;
         this.activeCoordinator = student.sections[0].groups[0].justiFiles.map((t) => t);
         this.activeGroup = student.sections[0].groups;
-        console.log(this.activeCoordinator);
       },
       error: (error) => console.log(error),
     });

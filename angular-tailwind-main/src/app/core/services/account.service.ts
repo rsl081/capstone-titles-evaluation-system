@@ -4,7 +4,6 @@ import { map, ReplaySubject, Subject } from 'rxjs';
 import { IUser, IUserRoot } from 'src/app/shared/models/user';
 import { environment } from 'src/environments/environment';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -30,7 +29,7 @@ export class AccountService {
   getRole() {
     let user = localStorage.getItem('user');
     let obj = JSON.parse(user);
-    return obj.role
+    return obj.role;
   }
 
   registerFaculty(values: any) {
@@ -48,7 +47,6 @@ export class AccountService {
       localStorage.setItem('user', JSON.stringify(user));
     }
   }
-  
 
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
@@ -79,10 +77,17 @@ export class AccountService {
     return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty/all').pipe(map((f) => f.data));
   }
 
+  getAllFacultyAdviserAndPanel() {
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/faculty-panel-and-adviser/all').pipe(map((f) => f.data));
+  }
+
+  getAllAdviserAndPanel() {
+    return this.http.get<IUserRoot>(this.baseURL + 'admin/panel-and-adviser/all').pipe(map((f) => f.data));
+  }
+
   //get yung user
-  getCurrentUser(id:string) {
-    return this.http.get<IUserRoot>(this.baseURL + 'account/get-current-user/'+ id)
-      .pipe(map((f) => f));
+  getCurrentUser(id: string) {
+    return this.http.get<IUserRoot>(this.baseURL + 'account/get-current-user/' + id).pipe(map((f) => f));
   }
 
   getAllStudent() {
@@ -104,6 +109,4 @@ export class AccountService {
   resetPassword(body: {}) {
     return this.http.post<any>(this.baseURL + 'account/resetpassword', body);
   }
-
-
 }
