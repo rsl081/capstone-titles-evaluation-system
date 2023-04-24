@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Nft } from './models/nft';
 import { AccountService } from 'src/app/core/services/account.service';
 import { map } from 'rxjs';
 

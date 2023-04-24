@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Nft } from '../../models/nft';
 import { IUser } from 'src/app/shared/models/user';
 import { AccountService } from 'src/app/core/services/account.service';
 import { FormBuilder, FormGroup } from '@angular/forms';

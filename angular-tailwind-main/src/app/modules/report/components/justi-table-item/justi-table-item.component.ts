@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Nft } from 'src/app/modules/dashboard/models/nft';
 import { IUser } from 'src/app/shared/models/user';
 
 @Component({
