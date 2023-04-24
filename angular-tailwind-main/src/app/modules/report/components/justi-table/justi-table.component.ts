@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/core/services/account.service';
-import { Nft } from 'src/app/modules/dashboard/models/nft';
 
 @Component({
   selector: '[justi-table]',

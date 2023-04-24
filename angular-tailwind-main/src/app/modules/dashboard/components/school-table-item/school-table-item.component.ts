@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Nft } from '../../models/nft';
 import { SchoolService } from 'src/app/core/services/school.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
